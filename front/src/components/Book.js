@@ -8,3 +8,5 @@ function Book()
         </div>
     );
 }
+
+export default Book;
