@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const conn = require('../../database');
+const dao = require('../DAO');
 
 // 문제 List return API
 router.get("/", (req,res) => {    
@@ -7,7 +7,8 @@ router.get("/", (req,res) => {
 });
 
 // 문제 등록 API
-router.post("/", (req,res)=>{    
+router.post("/", async (req,res) => {
+    //let query = `INSERT INTO question (subject, make_time) VALUES ("${req.body.subject}", now())`;    
     res.send("SDFDSF");
 });
 
