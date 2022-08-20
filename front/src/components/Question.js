@@ -17,9 +17,6 @@ function Question()
                 <span className="title">• 답</span>
                 <InputAnswer subject={subject}/>
             </div>
-            <div className="question-regist">
-                <button className="regist-btn">등록하기</button>
-            </div>
         </div>
     );
 }
@@ -30,7 +27,9 @@ function InputAnswer(props)
     const [isAnswer, setIsAnswer] = useState(0);
     const qs = require('qs');
 
-    useEffect(() => {
+
+    const RegistQuestion = () => {
+
         const url = "http://localhost:5000/question"
         const data = {
             subject: props.subject,
@@ -42,13 +41,20 @@ function InputAnswer(props)
             ]
         }
 
+        console.log(data);
+
         axios.post(url, qs.stringify(data));
-    });
+    }
 
     return(
         <div className="input-answer-main">
-            <input className="input-answer" onChange={(e)=>{setAnswer(e.target.value)}}></input>
-            <span className={isAnswer?"answer-btn on":"answer-btn"} onClick={()=>{setIsAnswer(isAnswer?0:1)}}>정답</span>
+            <div className='input-answer'>
+                <input className="input-answer" onChange={(e)=>{setAnswer(e.target.value)}}></input>
+                <span className={isAnswer?"answer-btn on":"answer-btn"} onClick={()=>{setIsAnswer(isAnswer?0:1)}}>정답</span>
+            </div>
+            <div className="question-regist">
+                <button className="regist-btn" onClick={() => {RegistQuestion()}}>등록하기</button>
+            </div>
         </div>
     );
 }
