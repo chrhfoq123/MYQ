@@ -13,6 +13,7 @@ router.post("/", async (req,res) => {
     conn.query(query, (err,rows) => {
         if(err) console.log(err);
         const { insertId } = rows;
+        console.log("a");
         let sub_query = "INSERT INTO answer (subject, isAnswer, pkey) VALUES ";
         for(let i=0; i<req.body.answers.length; i++)
         {
@@ -23,6 +24,7 @@ router.post("/", async (req,res) => {
                 sub_query += ", ";
             }
         }
+        console.log("b");
         conn.query(sub_query, (_err, _rows) => {
             if(_err) console.log(_err);
             res.send(_rows);
