@@ -27,7 +27,6 @@ function InputAnswer(props)
     const [isAnswer, setIsAnswer] = useState(0);
     const qs = require('qs');
 
-
     const RegistQuestion = () => {
 
         const url = "http://localhost:5000/question"
@@ -58,4 +57,5 @@ function InputAnswer(props)
         </div>
     );
 }
+
 export {Question, InputAnswer}
