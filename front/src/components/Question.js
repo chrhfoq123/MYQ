@@ -41,8 +41,8 @@ function InputAnswer(props)
         }
 
         console.log(data);
-
-        axios.post(url, qs.stringify(data));
+        
+        return axios.post(url, data);
     }
 
     return(
