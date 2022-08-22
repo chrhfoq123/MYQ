@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import {Question} from './components/Question';
+import Question from './components/Question';
 import Main from './components/Main';
 import Header from './components/Header';
 import Book from './components/Book';
