@@ -4,27 +4,28 @@ import axios from 'axios';
 
 function QuestionList()
 {
-    return(
-        <div className='QuestionList-main'>
-            <ListGroup>
-                <QuestionView/>
-            </ListGroup>
-        </div>
-    );
-}
-
-function QuestionView()
-{
-    const [subject, setSubject] = useState();
+    const [list, setList] = useState();
 
     useEffect(() => {
         axios.get("http://localhost:5000/question")
         .then(res=>{
-           console.log(res);
+            console.log(res.data);
+            setList(res.data);
         });
-    });
+    }, []);
 
-    <ListGroup.Item>{subject}</ListGroup.Item>
+    return(
+        <div className='QuestionList-main'>
+            <ListGroup>
+                {list?list.map((obj, index) => {
+                    return(
+                        <ListGroup.Item>{obj.subject}</ListGroup.Item>
+                    )
+                }):"로딩중"}
+                
+            </ListGroup>
+        </div>
+    );
 }
 
 export default QuestionList;
