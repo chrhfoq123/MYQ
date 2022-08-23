@@ -99,4 +99,21 @@ router.patch("/:idx", async (req,res) => {
     });
 });
 
+// 데이터 삭제 API
+// DELETE http://localhost:5000/:idx
+router.delete("/:idx", async (req, res) => {
+    const idx = req.params.idx;
+    if(!idx || idx === undefined)
+    {
+        res.send({msg:"idx null"});
+        return;
+    }
+    let query = `DELETE FROM question WHERE idx = ${idx}`;
+    const conn = await require("../../database")();
+    conn.query(query, (err, row) => {
+        if(err) console.log(err);        
+        res.send(row);
+    });    
+});
+
 module.exports = router;
