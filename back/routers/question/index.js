@@ -7,13 +7,12 @@ router.get("/", (req,res) => {
 });
 
 // 문제 등록 API
-router.post("/", async (req,res) => {
+router.post("/", async (req,res) => {            
     let query = `INSERT INTO question (subject, make_time) VALUES ("${req.body.subject}", now())`;
     const conn = await require("../../database")();
     conn.query(query, (err,rows) => {
         if(err) console.log(err);
-        const { insertId } = rows;
-        console.log("a");
+        const { insertId } = rows;        
         let sub_query = "INSERT INTO answer (subject, isAnswer, pkey) VALUES ";
         for(let i=0; i<req.body.answers.length; i++)
         {
@@ -23,8 +22,7 @@ router.post("/", async (req,res) => {
             {
                 sub_query += ", ";
             }
-        }
-        console.log("b");
+        }        
         conn.query(sub_query, (_err, _rows) => {
             if(_err) console.log(_err);
             res.send(_rows);

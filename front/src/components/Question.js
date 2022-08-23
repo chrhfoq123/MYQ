@@ -19,7 +19,8 @@ function Question()
             ]
         }
         console.log(data);
-        axios.post(url, data);
+        
+        return axios.post(url, data);
     }
 
     return(
@@ -29,6 +30,7 @@ function Question()
                 <input className='subject-input' value={subject} onChange={(e) => {setSubject(e.target.value)}}></input>
             </div>
             <div className='answer-title'>
+                {/*여기 답 여러개 추가할 수 있는거랑 answer-input css만 손보면 될듯*/}
                 <span className='answer'>• 답</span>
                 <div className='answer-input-area'>
                     <label><input className='answer-input' value={answer} onChange={(e) => {setAnswer(e.target.value)}}></input></label>

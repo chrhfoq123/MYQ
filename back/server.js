@@ -4,11 +4,10 @@ const bodyParser = require('body-parser');
 const question = require("./routers/question");
 const book = require("./routers/book");
 const answer = require("./routers/answer");
+const cors = require("cors");
 
 app.use(bodyParser.json());
-
-app.get("/", (req,res)=>{ res.send("Welcome"); });
-
+app.use(cors());
 app.use("/question", question);
 app.use("/book", book);
 app.use("/answer", answer);

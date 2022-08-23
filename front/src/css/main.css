@@ -17,3 +17,6 @@
 .isAnswer-btn.on{border: 2px solid #00eaff; border-radius:15%; font-weight: bold; margin-left: 3%; color: #ffffff; background-color: #00eaff;}
 .regist-area{display: flex; width: 100%; max-width: 60%; margin: 0 auto; justify-content: center; margin-top: 20%;}
 .regist-btn{width: 40%; border-radius: 1rem; border: none; background-color: #383838; color: #f1f1f1; font-size: 26px; padding: 0.7rem; font-weight: bold;}
+
+/* QuestionList */
+.QuestionList-main{widtH: 40%; margin: auto;}

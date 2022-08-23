@@ -1,6 +1,6 @@
 
 
-function Main(props)
+function Main()
 {
     return(
         <div>
