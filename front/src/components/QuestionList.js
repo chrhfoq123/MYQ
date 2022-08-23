@@ -17,10 +17,16 @@ function QuestionList()
 
     return(
         <div className='QuestionList-main'>
-            <ListGroup>
+            <ListGroup numbered>
                 {list?list.map((obj, index) => {
                     return(
-                        <ListGroup.Item><Link to={`${obj.idx}`}>{obj.subject}</Link></ListGroup.Item>
+                        <ListGroup.Item
+                            href={`/question/${obj.idx}`}
+                            action
+                            variant='light'
+                        >
+                            {obj.subject}
+                        </ListGroup.Item>
                     )
                 }):"로딩중"}
                 
