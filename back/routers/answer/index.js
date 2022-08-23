@@ -25,6 +25,7 @@ router.patch("/:idx", async (req,res)=>{
         if(err) console.log(err);
         row.idx = idx;
         res.send(row);
+        conn.end();
     });
 
 });

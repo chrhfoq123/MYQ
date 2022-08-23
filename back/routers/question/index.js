@@ -6,11 +6,12 @@ const dao = require('../DAO');
 // 쿼리스트링 count = 가져올 리스트의 갯수
 router.get("/", async (req,res) => {        
     let count = req.query.count ? req.query.count : 15;
-    let query = `SELECT * FROM question ORDER BY idx DESC LIMIT ${count}`;
+    let query = `SELECT * FROM question ORDER BY idx DESC LIMIT ${count}`;    
     const conn = await require('../../database')();
     conn.query(query, (err,row) => {
         if(err) console.log(err);
         res.send(row);
+        conn.end();
     });
 });
 
@@ -34,6 +35,7 @@ router.post("/", async (req,res) => {
         conn.query(sub_query, (_err, _rows) => {
             if(_err) console.log(_err);
             res.send(_rows);
+            conn.end();
         });        
     })    
 });
@@ -71,6 +73,7 @@ router.get("/:idx", async (req, res) => {
             data.answers[i] = aobj;
         }
         res.send(data);
+        conn.end();
     });
 });
 
@@ -96,6 +99,7 @@ router.patch("/:idx", async (req,res) => {
         if(err) console.log(err);
         row.idx = idx;
         res.send(row);
+        conn.end();
     });
 });
 
@@ -113,6 +117,7 @@ router.delete("/:idx", async (req, res) => {
     conn.query(query, (err, row) => {
         if(err) console.log(err);        
         res.send(row);
+        conn.end();
     });    
 });
 
