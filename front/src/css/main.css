@@ -5,6 +5,18 @@
 .question-area{border-bottom: 1px solid#000000;}
 
 
-/*regist question*/
-.input-answer-main{display: flex;}
-.answer-btn{border: 2px solid#000000;}
+/* Question */
+.Question-main{widtH: 40%; margin: auto;}
+.subject{font-size: 30px; font-weight: bold;}
+.subject-input{border: none; width: 100%; height: 40%; border-bottom: 2px solid #818181; font-size: 1.2rem; margin-top: 5%;}
+.answer-title{margin-top: 8%;}
+.answer-input-area{flex-direction: column;}
+.answer{font-size: 30px; font-weight: bold;}
+.answer-input{margin-top: 3%;}
+.isAnswer-btn{border: 2px solid #00eaff; border-radius: 15%; font-weight: bold; margin-left: 3%;}
+.isAnswer-btn.on{border: 2px solid #00eaff; border-radius:15%; font-weight: bold; margin-left: 3%; color: #ffffff; background-color: #00eaff;}
+.regist-area{display: flex; width: 100%; max-width: 60%; margin: 0 auto; justify-content: center; margin-top: 20%;}
+.regist-btn{width: 40%; border-radius: 1rem; border: none; background-color: #383838; color: #f1f1f1; font-size: 26px; padding: 0.7rem; font-weight: bold;}
+
+/* QuestionList */
+.QuestionList-main{widtH: 40%; margin: auto;}
