@@ -1,6 +1,7 @@
 import ListGroup from 'react-bootstrap/ListGroup';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 function QuestionList()
 {
@@ -19,7 +20,7 @@ function QuestionList()
             <ListGroup>
                 {list?list.map((obj, index) => {
                     return(
-                        <ListGroup.Item>{obj.subject}</ListGroup.Item>
+                        <ListGroup.Item><Link to={`${obj.idx}`}>{obj.subject}</Link></ListGroup.Item>
                     )
                 }):"로딩중"}
                 
