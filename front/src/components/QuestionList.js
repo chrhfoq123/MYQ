@@ -1,4 +1,4 @@
-import ListGroup from 'react-bootstrap/ListGroup';
+import {ListGroup, Button} from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -10,13 +10,15 @@ function QuestionList()
     useEffect(() => {
         axios.get("http://localhost:5000/question")
         .then(res=>{
-            console.log(res.data);
             setList(res.data);
         });
     }, []);
 
     return(
         <div className='QuestionList-main'>
+            <div>
+                <Button href='/question'>문제등록</Button>
+            </div>
             <ListGroup numbered>
                 {list?list.map((obj, index) => {
                     return(
