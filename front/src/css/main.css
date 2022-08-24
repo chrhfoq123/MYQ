@@ -16,3 +16,13 @@
 
 /* QuestionList */
 .QuestionList-main{widtH: 40%; margin: auto;}
+
+
+
+/* ptk */
+.question-answer-add { display: flex; justify-content: center; align-items: center;}
+.question-answer-add > input { width: 75% ;}
+.question-answer-add > span {border: 1px solid #000000; margin-left: 1rem; font-size: 18px; padding: 0rem 0.4rem; border-radius: 4px; font-weight: bold; cursor: pointer;}
+.question-answer-add > .add-btn {background-color: #383838; color: #ffffff;}
+.question-answer-add > span.on {border: 1px solid #0b5ed7; background-color: #0b5ed7; color: #ffffff;}
+/* .question-answer-add > span:hover {background-color: #eeeeee;} */
