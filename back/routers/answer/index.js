@@ -29,4 +29,17 @@ router.patch("/:idx", async (req,res)=>{
     });
 
 });
+
+// 문제 삭제 API
+router.delete("/:idx", async (req, res) => {
+    const idx = req.params.idx;
+    let query = `DELETE FROM answer WHERE idx = ${idx}`;
+    const conn = await require("../../database")();
+    conn.query(query, (err, row) => {
+        if(err) console.log(err);        
+        res.send(row);
+        conn.end();
+    });    
+});
+
 module.exports = router;
