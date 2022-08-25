@@ -18,7 +18,7 @@ function QuestionList()
         <div className='QuestionList-main'>
             <div className='regist-btn'>
                 <div className='d-grid gap-2'>
-                    <Button variant="dark" href='/question'>문제등록</Button>
+                    <Button variant="dark" href='/question'>문제 등록</Button>
                 </div>
             </div>
             
