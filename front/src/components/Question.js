@@ -63,7 +63,9 @@ function QuestionAnswer(prop) {
     }
 
     const removeAnswer = (index) => {
-        console.log(answers[index]);
+        let arr = [...answers];        
+        arr.splice(index,1);
+        setAnswers(arr);
     }
 
     return (        
@@ -84,7 +86,7 @@ function QuestionAnswer(prop) {
                 })
                 : (
                     <tr>
-                        <td style={{textAlign : "center"}} colSpan={4}>No Data</td>
+                        <td style={{textAlign : "center"}} colSpan={4}>No Dap</td>
                     </tr>
                 )
                 }
