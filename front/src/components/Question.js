@@ -25,8 +25,48 @@ function Question()
     )
 }
 
-function QuestionAnswer() {
-    return (
+function Answer(props)
+{    
+    const answer = props.answer;    
+    return(
+        <tr>
+            <td>{answer.index + 1}</td>
+            <td>{answer.subject}</td>
+            <td>{answer.isAnswer ? "O" : "X"}</td>
+            <td><Button onClick={()=>{props.removeAnswer(answer.index)}}>취소</Button></td>
+        </tr>
+    );
+
+}
+
+function QuestionAnswer(prop) {
+    const [answers, setAnswers] = useState();
+    const [subject, setSubject] = useState("");
+    const [isAnswer, setIsAnswer] = useState(0);
+
+    const addAnswer = () => {
+        const answer = {
+            subject : subject,
+            isAnswer : isAnswer
+        }                
+        let arr;
+        if(answers === undefined) {
+            arr = new Array();
+            arr.push(answer);
+            setAnswers(arr);
+        } else {
+            arr = [...answers, answer];
+            setAnswers(arr);
+        }        
+        setSubject("");
+        setIsAnswer(0);
+    }
+
+    const removeAnswer = (index) => {
+        console.log(answers[index]);
+    }
+
+    return (        
         <>
             <Table striped bordered hover>
                 <thead>
@@ -38,18 +78,16 @@ function QuestionAnswer() {
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>O</td>
-                    <td><Button>취소</Button></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>X</td>
-                    <td><Button>취소</Button></td>
-                </tr>
+                {answers ? answers.map((obj, index)=>{
+                    obj.index = index;
+                    return <Answer key={index} answer={obj} removeAnswer={removeAnswer}/>;
+                })
+                : (
+                    <tr>
+                        <td style={{textAlign : "center"}} colSpan={4}>No Data</td>
+                    </tr>
+                )
+                }
                 </tbody>
             </Table>
             <Table striped bordered hover>
@@ -61,15 +99,15 @@ function QuestionAnswer() {
                 <tbody>
                 <tr>
                     <td className="question-answer-add">
-                        <input/>
-                        <span className='select-isAnswer'>정답</span>
-                        <span className='add-btn'>추가</span>
+                        <input placeholder='객관식 내용을 입력하여 주세요' value={subject} onChange={(e)=>{setSubject(e.target.value)}}/>
+                        <span className={isAnswer ? "select-isAnswer on" : "select-isAnswer"} onClick={()=>{setIsAnswer(isAnswer ? 0 : 1)}}>정답</span>
+                        <span className='add-btn' onClick={()=>{addAnswer()}}>추가</span>
                     </td>                                          
                 </tr>
                 </tbody>
             </Table>            
         </>
     );
-  }
+}
 
 export default Question;
