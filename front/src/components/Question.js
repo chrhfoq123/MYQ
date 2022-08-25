@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Form, Button, Table } from 'react-bootstrap'
-
+import axios from 'axios';
 function Question()
 {    
+    const [title, setTitle] = useState();
     const [answers, setAnswers] = useState([]);
     const [subject, setSubject] = useState("");
     const [isAnswer, setIsAnswer] = useState(0);    
@@ -31,19 +32,36 @@ function Question()
         setAnswers(arr);
     }
 
-    const submitAction = (e) => {
+    const submitAction = async (e) => {
         e.preventDefault();
+        postQuestion()
+        .then(res=>{
+            console.log(res);
+            // 여기 부터 result 마져해줘야함
+        });
+    }
+
+    const postQuestion = async () => {
+        const data = {
+            subject : title,
+            answers : answers
+        };
+        return axios({
+            url : "http://localhost:5000/question",
+            method : "POST",
+            data : data
+        });
     }
     
 
     return(
         <div className='Question-main'>
             <Form onSubmit={(e)=>{submitAction(e)}}>
-                <Form.Group className="mb-3" controlId="subject">
+                <Form.Group className="mb-3" controlId="title" value={title} onChange={(e)=>{setTitle(e.target.value)}}>
                     <Form.Label>• 문제</Form.Label>
                     <Form.Control type="text" placeholder="문제를 입력 하세요"/>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="subject">
+                <Form.Group className="mb-3" controlId="">
                     <Form.Label>• 답안</Form.Label>                    
                     <QuestionAnswer 
                         answers={answers}
