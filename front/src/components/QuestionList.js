@@ -1,4 +1,4 @@
-import {ListGroup, Button} from 'react-bootstrap';
+import {ListGroup, Button, Spinner} from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
@@ -16,23 +16,29 @@ function QuestionList()
 
     return(
         <div className='QuestionList-main'>
-            <div>
-                <Button href='/question'>문제등록</Button>
+            <div className='regist-btn'>
+                <div className='d-grid gap-2'>
+                    <Button variant="dark" href='/question'>문제등록</Button>
+                </div>
             </div>
-            <ListGroup numbered>
+            
                 {list?list.map((obj, index) => {
                     return(
-                        <ListGroup.Item
-                            href={`/question/${obj.idx}`}
-                            action
-                            variant='light'
-                        >
-                            {obj.subject}
-                        </ListGroup.Item>
+                        <ListGroup>
+                            <ListGroup.Item className="my-1"
+                                href={`/question/${obj.idx}`}
+                                action
+                                variant='light'
+                            >
+                                {index+1}.&nbsp;
+                                {obj.subject}
+                            </ListGroup.Item>
+                        </ListGroup>
+
                     )
-                }):"로딩중"}
-                
-            </ListGroup>
+                }): <Spinner animation="border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </Spinner>}
         </div>
     );
 }
