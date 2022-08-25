@@ -1,47 +1,75 @@
 import { useState } from 'react';
-import axios from 'axios';
+import { Form, Button, Table } from 'react-bootstrap'
 
 function Question()
 {
-    const [subject, setSubject] = useState();
-    const [answer, setAnswer] = useState();
-    const [isAnswer, setIsAnswer] = useState(0);
-
-    const submitQuestion = () => {
-        const url = "http://localhost:5000/question";
-        const data = {
-            subject: subject,
-            answers: [
-                {
-                    subject: answer,
-                    isAnswer: isAnswer
-                }
-            ]
-        }
-        console.log(data);
-        
-        return axios.post(url, data);
+    const submitAction = (e) => {
+        e.preventDefault();
     }
-
     return(
         <div className='Question-main'>
-            <div className='subject-title'>
-                <span className='subject'>• 문제</span>
-                <input className='subject-input' value={subject} onChange={(e) => {setSubject(e.target.value)}}></input>
-            </div>
-            <div className='answer-title'>
-                {/*여기 답 여러개 추가할 수 있는거랑 answer-input css만 손보면 될듯*/}
-                <span className='answer'>• 답</span>
-                <div className='answer-input-area'>
-                    <label><input className='answer-input' value={answer} onChange={(e) => {setAnswer(e.target.value)}}></input></label>
-                    <span className={isAnswer?"isAnswer-btn on":"isAnswer-btn"} onClick={()=>{setIsAnswer(isAnswer?0:1)}}>정답</span>
-                </div>
-            </div>
-            <div className='regist-area'>
-                <button className='regist-btn' onClick={() => {submitQuestion()}}>등록하기</button>
-            </div>
+            <Form onSubmit={(e)=>{submitAction(e)}}>
+                <Form.Group className="mb-3" controlId="subject">
+                    <Form.Label>• 문제</Form.Label>
+                    <Form.Control type="text" placeholder="문제를 입력 하세요"/>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="subject">
+                    <Form.Label>• 답안</Form.Label>                    
+                    <QuestionAnswer/>
+                </Form.Group>                
+                <Button variant="primary" type="submit">
+                    등록하기
+                </Button>
+            </Form>
         </div>
     )
 }
+
+function QuestionAnswer() {
+    return (
+        <>
+            <Table striped bordered hover>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>내용</th>
+                    <th>답 여부</th>
+                    <th>옵션</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Mark</td>
+                    <td>O</td>
+                    <td><Button>취소</Button></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Jacob</td>
+                    <td>X</td>
+                    <td><Button>취소</Button></td>
+                </tr>
+                </tbody>
+            </Table>
+            <Table striped bordered hover>
+                <thead>
+                <tr>
+                    <th className='text-center'>객관식 추가</th>                    
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td className="question-answer-add">
+                        <input/>
+                        <span className='select-isAnswer'>정답</span>
+                        <span className='add-btn'>추가</span>
+                    </td>                                          
+                </tr>
+                </tbody>
+            </Table>            
+        </>
+    );
+  }
 
 export default Question;
