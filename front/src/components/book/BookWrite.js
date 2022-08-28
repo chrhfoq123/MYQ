@@ -2,6 +2,7 @@ import { Form, Button, Table, Modal } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import Question from '../Question';
 import useFetch from '../../hook/useFetch';
+import axios from 'axios';
 function BookWrite()
 {
     return(                
@@ -71,12 +72,34 @@ function BookModal() {
 function BookModalContent()
 {
     const [questionList, setQuestionList] = useState([]);
-
-    const temp = useFetch(`http://localhost:5000/question`);
-    console.log(temp);
+    
+    useEffect(()=>{
+        axios({
+            method : "GET",
+            url : "http://localhost:5000/question"
+        })
+        .then(res=>setQuestionList(res.data));
+    },[]);
 
     return(
-        <div>내용이다</div>
+        <div>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th style={{textAlign : 'center'}}>번호</th>
+                        <th>문제이름</th>                        
+                        <th>옵션</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style={{textAlign : 'center'}}>1</td>
+                        <td>2</td>
+                        <td><button>등록</button></td>
+                    </tr>
+                </tbody>
+            </Table>
+        </div>
     );
 }
 export default BookWrite;
