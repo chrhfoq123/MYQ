@@ -10,9 +10,7 @@ router.post("/", async (req, res)=>{
         res.send({msg : "Subject Null"});
         return;
     }    
-    if(memo === undefined){
-        memo = "";
-    }    
+    
     let query = `INSERT INTO book (subject, memo, make_time) VALUES ("${subject}", "${memo}", now());`;    
 
     const conn = await require("../../database")();

@@ -6,15 +6,23 @@ function BookWrite()
     const [subject, setSubject] = useState();
     const [memo, setMemo] = useState();
 
-    const submitBook = () =>{
+    const submitBook = (event) =>{
+        event.preventDefault();
         const data = {
             subject : subject,
             memo : memo
         }
+
         axios({
             method : "POST",
             url : "http://localhost:5000/book",
             data : data
+        })
+        .then(res => {
+            if(res.status == 200){
+                alert("문제집이 등록되었습니다.");
+                window.location.href="/book";
+            }
         });
     }
 
@@ -29,7 +37,7 @@ function BookWrite()
                     <Form.Label>• 메모</Form.Label>
                     <Form.Control type="text" placeholder="메모를 입력하세요." onChange={(e)=>{setMemo(e.target.value)}}/>
                 </Form.Group>
-                <Button variant="primary" onClick={submitBook()} type="submit">
+                <Button variant="primary" onClick={(event) => {submitBook(event)}} type="submit">
                     등록하기
                 </Button>
             </Form>
