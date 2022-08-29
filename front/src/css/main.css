@@ -24,3 +24,5 @@
 .book-main{widtH: 40%; margin: 3% auto; }
 .book-area{display: flex; flex-direction: row; flex-wrap: wrap; margin-top: 2%;}
 .book-item{margin-bottom: 2%; margin-right: 2%;}
+
+.book-write {width: 40%; margin: 3rem auto;}
