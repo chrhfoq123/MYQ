@@ -5,7 +5,7 @@ function Book()
     return(
         <div className='book-main'>
             <div className='d-grid gap-2'>
-                <Button variant="dark" href='/question'>문제집 등록</Button>
+                <Button variant="dark" href='/bookwrite'>문제집 등록</Button>
             </div>
             <div className='book-area'>
                 <div className='book-item'>
