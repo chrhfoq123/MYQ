@@ -34,6 +34,7 @@ router.post("/", async (req,res) => {
         }        
         conn.query(sub_query, (_err, _rows) => {
             if(_err) console.log(_err);
+            console.log(_rows);
             res.send(_rows);
             conn.end();
         });        

@@ -16,6 +16,10 @@ function Question()
         let arr;
         if(answers[0] === undefined) {
             arr = new Array();
+            if(answer.subject === "" || answer.subject === undefined){
+                alert("답을 입력해주세요.");
+                return;
+            }
             arr.push(answer);
             setAnswers(arr);
         } else {
@@ -37,11 +41,25 @@ function Question()
         postQuestion()
         .then(res=>{
             console.log(res);
-            // 여기 부터 result 마져해줘야함
+            if(res.status === 200)
+            {
+                alert("문제가 등록되었습니다.");
+                //window.location.href="questionlist";
+            }
         });
     }
 
     const postQuestion = async () => {
+        if(title === "" || title === undefined){
+            alert("문제를 입력해주세요.");
+            return;
+        }
+
+        if(answers.subject === "" || answers.subject === undefined){
+            alert("답을 추가해주세요.");
+            return;
+        }
+
         const data = {
             subject : title,
             answers : answers
@@ -53,7 +71,6 @@ function Question()
         });
     }
     
-
     return(
         <div className='Question-main'>
             <Form onSubmit={(e)=>{submitAction(e)}}>
