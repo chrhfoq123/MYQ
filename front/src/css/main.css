@@ -28,7 +28,7 @@
 .book-write {width: 40%; margin: 3rem auto;}
 
 /* Book View */
-.book-view {width: 50%; margin: 3rem auto; border : 3px solid #797979; padding: 3rem;}
+.book-view {width: 50%; margin: 3rem auto; border : 3px solid #797979; padding: 3rem; border-radius: 15px;}
 .book-view .book-info {display: flex; justify-content: space-between; flex-wrap: wrap;}
 .book-view .info-item {display: flex; flex-direction: column; margin: 1rem; width: 45%;}
 .book-view .item-text {font-size: 1.8rem;}

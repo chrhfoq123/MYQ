@@ -4,6 +4,13 @@ import { useParams } from "react-router-dom";
 import axios from 'axios';
 function BookView()
 {
+
+    /**
+     * 1. 데이터 바인딩 
+     * 2. 문제추가 함수
+     * 3. 백엔드 통신
+     */
+
     const { idx } = useParams();
     const [ book, setBook ] = useState();
     useEffect(() => {
@@ -23,7 +30,7 @@ function BookView()
                 <div className='info-item'>
                     <span>• 생성 일자</span>
                     <span className='item-text'><strong>대충 문제집 이름이다</strong></span>
-                </div>                
+                </div>
             </div>
             <div className='child-question'>
                 <strong>포함 문제</strong>
