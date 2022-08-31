@@ -9,6 +9,7 @@ import Book from './components/Book';
 import BookWrite from './components/book/BookWrite';
 import QuestionList from './components/QuestionList';
 import Developer from './components/Developer';
+import BookView from './components/book/BookView';
 
 function App(props) {
   return (
@@ -21,6 +22,7 @@ function App(props) {
             <Route path='Question' element={<Question/>}/>
             <Route path='Book' element={<Book/>}/>
             <Route path='BookWrite' element={<BookWrite/>}/>
+            <Route path='Book/:idx' element={<BookView/>}/>
             <Route path='QuestionList' element={<QuestionList/>}/>
             <Route path='developer' element={<Developer/>}/>
           </Routes>
