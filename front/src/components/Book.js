@@ -18,33 +18,35 @@ function Book()
 
 function BookCard()
 {
-    const[subject, setSubject] = useState("");
-    const[memo, setMemo] = useState("");
+    const[obj, setObj] = useState();
 
     useEffect(() => {
         axios({
             method : "GET",
             url : "http://localhost:5000/book"
         }).then(res => {
-            console.log(res);
-            //subject, memo 받아와서 출력
+            setObj(res.data);
         })
-    });
+    },[]);
     
     return(
-        <div className='book-item'>
-            <Card style={{ width: '15rem' }}>
-                <Card.Img variant="top" src="img/asdfasdf.png" />
-                <Card.Body>
-                    <Card.Title>정보처리기사</Card.Title>
-                    <Card.Text>
-                        2022-08-25 정보처리기사 정리문제집
-                    </Card.Text>
-                    <Button variant="primary" size='sm'>문제 풀기</Button>{' '}
-                    <Button variant="primary" size='sm'>문제집 보기</Button>
-                </Card.Body>
-            </Card>
-        </div>
+        <>
+        {obj?obj.map((obj, index)=>{
+            return(
+                <div className='book-item'>
+                    <Card style={{ width: '14.8rem' }}>
+                        <Card.Img variant="top" src="img/asdfasdf.png" />
+                        <Card.Body>
+                            <Card.Title>{obj.subject}</Card.Title>
+                            <Card.Text>{obj.memo}</Card.Text>
+                            <Button variant="primary" size='sm'>문제 풀기</Button>{' '}
+                            <Button variant="primary" size='sm'>문제집 보기</Button>
+                        </Card.Body>
+                    </Card>
+                </div>
+            )
+        }):"로딩중..."}
+        </>
     )
 }
 
