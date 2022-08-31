@@ -39,7 +39,7 @@ function BookCard()
                         <Card.Body>
                             <Card.Title>{obj.subject}</Card.Title>
                             <Card.Text>{obj.memo}</Card.Text>
-                            <Button variant="primary" size='sm'>문제 풀기</Button>{' '}
+                            <Button variant="primary" size='sm' href='/booksolve'>문제 풀기</Button>{' '}
                             <Button variant="primary" size='sm'>문제집 보기</Button>
                         </Card.Body>
                     </Card>

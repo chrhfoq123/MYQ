@@ -10,6 +10,7 @@ import BookWrite from './components/book/BookWrite';
 import QuestionList from './components/QuestionList';
 import Developer from './components/Developer';
 import BookView from './components/book/BookView';
+import BookSolve from './components/book/BookSolve';
 
 function App(props) {
   return (
@@ -25,6 +26,7 @@ function App(props) {
             <Route path='Book/:idx' element={<BookView/>}/>
             <Route path='QuestionList' element={<QuestionList/>}/>
             <Route path='developer' element={<Developer/>}/>
+            <Route path='BookSolve' element={<BookSolve/>}/>
           </Routes>
         </div>
       </BrowserRouter>

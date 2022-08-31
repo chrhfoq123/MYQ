@@ -26,3 +26,6 @@
 .book-item{margin-bottom: 2%; margin-right: 2%;}
 
 .book-write {width: 40%; margin: 3rem auto;}
+
+/* BookSolve */
+.booksolve-area{width: 70%; border: 2px solid #c4c4c4; border-radius: 10px; margin: 2rem auto;}
