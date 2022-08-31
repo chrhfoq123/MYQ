@@ -1,6 +1,26 @@
 const router = require('express').Router();
-router.get("/", (req, res)=>{
-    res.send("책페이지");
+router.get("/", async (req, res)=>{
+    let query = `SELECT * FROM book`;    
+    const conn = await require("../../database")();
+    conn.query(query, (err, row) => {
+        if(err) console.log(err);                
+        res.send(row);
+        conn.end();
+    });
+});
+
+
+router.get("/:idx", async (req, res)=>{
+    //let query = `SELECT * FROM book WHERE idx = ${req.params.idx}`;    
+    let query = `SELECT * FROM book LEFT JOIN book_child ON book.idx = book_child.parent WHERE book.idx = ${req.params.idx}`;
+
+    // join 으로 들고와서 데이트가 없는거나 1개있는거나 구분이 힘듬 이거 해결할것 !!!!!!!!!!!!!!!!!!
+    const conn = await require("../../database")();
+    conn.query(query, (err, row) => {
+        if(err) console.log(err);                
+        res.send(row);
+        conn.end();
+    });
 });
 
 router.post("/", async (req, res)=>{
@@ -9,8 +29,7 @@ router.post("/", async (req, res)=>{
     if(subject === undefined) {
         res.send({msg : "Subject Null"});
         return;
-    }    
-    
+    }
     let query = `INSERT INTO book (subject, memo, make_time) VALUES ("${subject}", "${memo}", now());`;    
 
     const conn = await require("../../database")();
