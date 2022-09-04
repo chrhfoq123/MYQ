@@ -5,9 +5,13 @@ import axios from 'axios';
 function BookView()
 {
 
-    /**     
-     * 2. 문제추가 함수
-     * 3. 백엔드 통신
+    /**          
+     * 1. 서브및 함수 구현
+     * 2. 서브및 백엔드 구현
+     * 3. 문제 수정 구현
+     * 4. 문제 삭제 구현
+     * 5. 문제집 수정 구현
+     * 6. 문제집 삭제 구현
      */
 
     const { idx } = useParams();
@@ -32,14 +36,18 @@ function BookView()
         .then(res => {setQuestion(res.data)});
     }, [question]);
 
-    const addQuestion = (idx, subject) => {
-        console.log(idx);
-        console.log(subject);
+    const addQuestion = (idx, subject) => {        
+        const question = {
+            idx : idx,
+            a_subject : subject
+        }
+        const arr = [...book, question];
+        setBook(arr);
     }
 
     return(            
         <>        
-        <button onClick={()=>{console.log(question);}}>12312</button>
+        <button onClick={()=>{console.log(book);}}>12312</button>
             <Modal show={show} onHide={handleClose} size='lg'>
                 <Modal.Header closeButton>
                 <Modal.Title>• 문제 추가</Modal.Title>
@@ -107,6 +115,9 @@ function BookView()
                             
                         </tbody>
                     </table>
+                </div>
+                <div>
+                    <span>등록하기</span>
                 </div>
             </div>
         </>    
