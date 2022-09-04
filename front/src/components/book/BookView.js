@@ -21,15 +21,19 @@ function BookView()
         .then(res => {setBook(res.data)});
     }, []);
     return(                
-        <div className='book-view'>
+        <div className='book-view'>            
             <div className='book-info'>
                 <div className='info-item'>
                     <span>• 문제집 이름</span>
-                    <span className='item-text'><strong>대충 문제집 이름이다</strong></span>
+                    <span className='item-text'><strong>{book ? book[0].subject : ""}</strong></span>
                 </div>
                 <div className='info-item'>
                     <span>• 생성 일자</span>
-                    <span className='item-text'><strong>대충 문제집 이름이다</strong></span>
+                    <span className='item-text'><strong>{book ? book[0].make_time : ""}</strong></span>
+                </div>
+                <div className='info-item'>
+                    <span>• 메모</span>
+                    <span className='item-text'><strong>{book ? book[0].memo : ""}</strong></span>
                 </div>
             </div>
             <div className='child-question'>
@@ -41,30 +45,33 @@ function BookView()
                         <col width={'25%'} />
                     </colgroup>
                     <thead>
-                        <td>번호</td>
-                        <td>문제</td>
-                        <td>옵션</td>
+                        <tr>
+                            <td>번호</td>
+                            <td>문제</td>
+                            <td>옵션</td>
+                        </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>테스트</td>
-                            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>테스트</td>
-                            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>테스트</td>
-                            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
-                        </tr>
+                        {book ? book.map((obj, index)=>{
+                            return  <BookAnswer key={index} index={index} subject={obj.a_subject}/>;
+                        }) : <tr><td>로딩</td></tr>}
+                        
                     </tbody>
                 </table>
             </div>
         </div>
+    );
+
+}
+
+function BookAnswer(props)
+{
+    return(
+        <tr>
+            <td>{props.index + 1}</td>
+            <td>{props.subject}</td>
+            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
+        </tr>
     );
 
 }
