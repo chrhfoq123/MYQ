@@ -28,7 +28,13 @@
 .book-write {width: 40%; margin: 3rem auto;}
 
 /* BookSolve */
-.booksolve-area{width: 70%; border: 2px solid #c4c4c4; border-radius: 10px; margin: 2rem auto;}
+.booksolve-area{width: 60%; height: 50%; border: 2px solid #c4c4c4; border-radius: 10px; margin: 2rem auto; padding: 1%;}
+.booksolve-question{font-size: 20px; border-bottom: 2px solid#c4c4c4; padding-bottom: 1%; margin-bottom: 2%;}
+.answer-check{padding-top: 1%;}
+.answer-submit{margin-left: 80%;}
+
+
+
 
 /* Book View */
 .book-view {width: 50%; margin: 3rem auto; border : 3px solid #797979; padding: 3rem; border-radius: 15px;}
