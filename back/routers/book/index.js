@@ -12,17 +12,37 @@ router.get("/", async (req, res)=>{
 
 router.get("/:idx", async (req, res)=>{
     //let query = `SELECT * FROM book WHERE idx = ${req.params.idx}`;    
-    let query = `SELECT * FROM book LEFT JOIN book_child ON book.idx = book_child.parent WHERE book.idx = ${req.params.idx}`;
+    //let query = `SELECT * FROM book LEFT JOIN book_child ON book.idx = book_child.parent WHERE book.idx = ${req.params.idx}`;
 
-    // join 으로 들고와서 데이트가 없는거나 1개있는거나 구분이 힘듬 이거 해결할것 !!!!!!!!!!!!!!!!!!
+    let query = `SELECT book.idx, book.subject, book.memo, book.make_time, book_child.idx as qid, (SELECT subject FROM question WHERE question.idx = book_child.\`key\` LIMIT 1) as asdf
+    FROM book LEFT JOIN book_child ON book.idx = book_child.parent WHERE book.idx = ${req.params.idx}`;    
     const conn = await require("../../database")();
     conn.query(query, (err, row) => {
-        if(err) console.log(err);                
+        if(err) console.log(err);
+
+        if(row.length == 0)
+        {
+            res.send({msg: "no-data"});
+            return;
+        }
+
+        const question = new Array();
+        for(obj of row)
+        {
+            if(obj.key === null)
+            {
+                break;
+            } else {
+                question.push(obj.key);
+            }
+        }
+
+
         res.send(row);
         conn.end();
     });
 });
-
+``
 router.post("/", async (req, res)=>{
     //INSERT INTO book (subject, memo, make_time) VALUES ("대충문제집 이름", "어쩌구한 메모", now());
     const { subject, memo } = req.body;    
