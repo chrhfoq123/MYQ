@@ -5,8 +5,7 @@ import axios from 'axios';
 function BookView()
 {
 
-    /**
-     * 1. 데이터 바인딩 
+    /**     
      * 2. 문제추가 함수
      * 3. 백엔드 통신
      */
@@ -38,6 +37,7 @@ function BookView()
             </div>
             <div className='child-question'>
                 <strong>포함 문제</strong>
+                <span className='child-question-addbtn'>+ 추가하기</span>                
                 <table>
                     <colgroup>
                         <col width={'10%'} />
