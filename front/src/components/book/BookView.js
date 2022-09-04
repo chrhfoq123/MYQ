@@ -12,7 +12,7 @@ function BookView()
 
     const { idx } = useParams();
     const [ book, setBook ] = useState();
-    const [show, setShow] = useState(false);
+    const [ show, setShow ] = useState(false);
     const handleClose = () => setShow(false); 
     const handleShow = () => setShow(true);
     useEffect(() => {
@@ -23,8 +23,23 @@ function BookView()
         .then(res => {setBook(res.data)});
     }, []);
 
+    const [question, setQuestion] = useState([]);
+    useEffect(() => {
+        axios({
+            method : "GET",
+            url : `http://localhost:5000/question`
+        })
+        .then(res => {setQuestion(res.data)});
+    }, [question]);
+
+    const addQuestion = (idx, subject) => {
+        console.log(idx);
+        console.log(subject);
+    }
+
     return(            
-        <>
+        <>        
+        <button onClick={()=>{console.log(question);}}>12312</button>
             <Modal show={show} onHide={handleClose} size='lg'>
                 <Modal.Header closeButton>
                 <Modal.Title>• 문제 추가</Modal.Title>
@@ -39,13 +54,11 @@ function BookView()
                                 <th>등록</th>
                             </tr>
                         </thead>
-                        <tbody className='question-add-modal'>
-                            <tr>
-                                <td>1</td>
-                                <td>어쩌구의 어쩌구는?7</td>
-                                <td>22.09.04</td>
-                                <td><Button>등록</Button></td>
-                            </tr>
+                        <tbody className='question-add-modal'>                            
+                            {question[0] === undefined ? <tr><td colSpan={4}>NoData</td></tr> : 
+                            question.map((obj,index) => {
+                                return <ModalQuestion key={index} question={obj} index={index} addQuestion={addQuestion}/>;
+                            })}
                         </tbody>
                     </Table>
                 </Modal.Body>
@@ -111,5 +124,18 @@ function BookAnswer(props)
         </tr>
     );
 
+}
+
+function ModalQuestion(props)
+{
+    const question = props.question;
+    return(
+        <tr>
+            <td>{props.index+1}</td>
+            <td>{question.subject}</td>
+            <td>{question.make_time}</td>
+            <td><Button onClick={() => {props.addQuestion(question.idx, question.subject)}}>등록</Button></td>
+        </tr>
+    );    
 }
 export default BookView;
