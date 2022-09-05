@@ -41,6 +41,7 @@ router.post("/", async (req,res) => {
     })    
 });
 
+// GET http://localhost:5000/question/:idx
 // 데이터 하나 가져오기
 router.get("/:idx", async (req, res) => {
     const { idx } = req.params;

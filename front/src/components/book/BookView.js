@@ -5,11 +5,7 @@ import axios from 'axios';
 function BookView()
 {
 
-    /**          
-     * 1. 서브및 함수 구현
-     * 2. 서브및 백엔드 구현
-     * 3. 문제 수정 구현
-     * 4. 문제 삭제 구현
+    /**                       
      * 5. 문제집 수정 구현
      * 6. 문제집 삭제 구현
      */
@@ -59,7 +55,12 @@ function BookView()
     const bookViewSubmit = () => {
         sendChildQuestion()
         .then(res=>console.log(res));
+    }
 
+    const cancelChildQuestion = (index) => {        
+        const arr =[...book];
+        arr.splice(index, 1);
+        setBook(arr);        
     }
 
     return(            
@@ -127,7 +128,7 @@ function BookView()
                         </thead>
                         <tbody>
                             {book ? book.map((obj, index)=>{
-                                return  <BookAnswer key={index} index={index} subject={obj.a_subject}/>;
+                                return  <BookAnswer key={index} index={index} subject={obj.a_subject} cancelChildQuestion={cancelChildQuestion}/>;
                             }) : <tr><td>로딩</td></tr>}
                             
                         </tbody>
@@ -148,7 +149,7 @@ function BookAnswer(props)
         <tr>
             <td>{props.index + 1}</td>
             <td>{props.subject}</td>
-            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
+            <td><Button className='m-1' onClick={() => {props.cancelChildQuestion(props.index)}}>삭제</Button></td>
         </tr>
     );
 
