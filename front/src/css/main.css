@@ -41,3 +41,7 @@
 .book-view .child-question table > thead {text-align: center; border-bottom: 2px solid #000000; font-weight: bold;}
 .book-view .child-question table tr {padding: 1rem}
 .book-view .child-question table tr:not(tr:last-child) {border-bottom: 1px solid #000000;}
+
+.book-view .child-question-addbtn {align-self: flex-end; padding-right: 2rem; padding-bottom: 0.6rem; color: #0b5ed7; cursor: pointer;}
+.question-add-modal-head > tr > th {text-align: center;}
+.question-add-modal > tr > td {vertical-align: middle; text-align: center;}

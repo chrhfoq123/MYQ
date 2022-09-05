@@ -5,14 +5,20 @@ import axios from 'axios';
 function BookView()
 {
 
-    /**
-     * 1. 데이터 바인딩 
-     * 2. 문제추가 함수
-     * 3. 백엔드 통신
+    /**          
+     * 1. 서브및 함수 구현
+     * 2. 서브및 백엔드 구현
+     * 3. 문제 수정 구현
+     * 4. 문제 삭제 구현
+     * 5. 문제집 수정 구현
+     * 6. 문제집 삭제 구현
      */
 
     const { idx } = useParams();
     const [ book, setBook ] = useState();
+    const [ show, setShow ] = useState(false);
+    const handleClose = () => setShow(false); 
+    const handleShow = () => setShow(true);
     useEffect(() => {
         axios({
             method : "GET",
@@ -20,52 +26,127 @@ function BookView()
         })
         .then(res => {setBook(res.data)});
     }, []);
-    return(                
-        <div className='book-view'>
-            <div className='book-info'>
-                <div className='info-item'>
-                    <span>• 문제집 이름</span>
-                    <span className='item-text'><strong>대충 문제집 이름이다</strong></span>
+
+    const [question, setQuestion] = useState([]);
+    useEffect(() => {
+        axios({
+            method : "GET",
+            url : `http://localhost:5000/question`
+        })
+        .then(res => {setQuestion(res.data)});
+    }, [question]);
+
+    const addQuestion = (idx, subject) => {        
+        const question = {
+            idx : idx,
+            a_subject : subject
+        }
+        const arr = [...book, question];
+        setBook(arr);
+    }
+
+    return(            
+        <>        
+        <button onClick={()=>{console.log(book);}}>12312</button>
+            <Modal show={show} onHide={handleClose} size='lg'>
+                <Modal.Header closeButton>
+                <Modal.Title>• 문제 추가</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Table striped bordered hover>
+                        <thead className='question-add-modal-head'>
+                            <tr>
+                                <th>번호</th>
+                                <th>문제</th>
+                                <th>생성일자</th>
+                                <th>등록</th>
+                            </tr>
+                        </thead>
+                        <tbody className='question-add-modal'>                            
+                            {question[0] === undefined ? <tr><td colSpan={4}>NoData</td></tr> : 
+                            question.map((obj,index) => {
+                                return <ModalQuestion key={index} question={obj} index={index} addQuestion={addQuestion}/>;
+                            })}
+                        </tbody>
+                    </Table>
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
+        
+            <div className='book-view'>            
+                <div className='book-info'>
+                    <div className='info-item'>
+                        <span>• 문제집 이름</span>
+                        <span className='item-text'><strong>{book ? book[0].subject : ""}</strong></span>
+                    </div>
+                    <div className='info-item'>
+                        <span>• 생성 일자</span>
+                        <span className='item-text'><strong>{book ? book[0].make_time : ""}</strong></span>
+                    </div>
+                    <div className='info-item'>
+                        <span>• 메모</span>
+                        <span className='item-text'><strong>{book ? book[0].memo : ""}</strong></span>
+                    </div>
                 </div>
-                <div className='info-item'>
-                    <span>• 생성 일자</span>
-                    <span className='item-text'><strong>대충 문제집 이름이다</strong></span>
+                <div className='child-question'>
+                    <strong>포함 문제</strong>
+                    <span className='child-question-addbtn' onClick={handleShow}>+ 추가하기</span>                                
+                    <table>
+                        <colgroup>
+                            <col width={'10%'} />
+                            <col width={'65%'} />
+                            <col width={'25%'} />
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <td>번호</td>
+                                <td>문제</td>
+                                <td>옵션</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {book ? book.map((obj, index)=>{
+                                return  <BookAnswer key={index} index={index} subject={obj.a_subject}/>;
+                            }) : <tr><td>로딩</td></tr>}
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <span>등록하기</span>
                 </div>
             </div>
-            <div className='child-question'>
-                <strong>포함 문제</strong>
-                <table>
-                    <colgroup>
-                        <col width={'10%'} />
-                        <col width={'65%'} />
-                        <col width={'25%'} />
-                    </colgroup>
-                    <thead>
-                        <td>번호</td>
-                        <td>문제</td>
-                        <td>옵션</td>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>테스트</td>
-                            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>테스트</td>
-                            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>테스트</td>
-                            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </>    
     );
 
+}
+
+function BookAnswer(props)
+{
+    return(
+        <tr>
+            <td>{props.index + 1}</td>
+            <td>{props.subject}</td>
+            <td><Button className='m-1'>수정</Button><Button className='m-1'>삭제</Button></td>
+        </tr>
+    );
+
+}
+
+function ModalQuestion(props)
+{
+    const question = props.question;
+    return(
+        <tr>
+            <td>{props.index+1}</td>
+            <td>{question.subject}</td>
+            <td>{question.make_time}</td>
+            <td><Button onClick={() => {props.addQuestion(question.idx, question.subject)}}>등록</Button></td>
+        </tr>
+    );    
 }
 export default BookView;

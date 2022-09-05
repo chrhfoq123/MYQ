@@ -14,7 +14,7 @@ router.get("/:idx", async (req, res)=>{
     //let query = `SELECT * FROM book WHERE idx = ${req.params.idx}`;    
     //let query = `SELECT * FROM book LEFT JOIN book_child ON book.idx = book_child.parent WHERE book.idx = ${req.params.idx}`;
 
-    let query = `SELECT book.idx, book.subject, book.memo, book.make_time, book_child.idx as qid, (SELECT subject FROM question WHERE question.idx = book_child.\`key\` LIMIT 1) as asdf
+    let query = `SELECT book.idx, book.subject, book.memo, book.make_time, book_child.idx as qid, (SELECT subject FROM question WHERE question.idx = book_child.\`key\` LIMIT 1) as a_subject
     FROM book LEFT JOIN book_child ON book.idx = book_child.parent WHERE book.idx = ${req.params.idx}`;    
     const conn = await require("../../database")();
     conn.query(query, (err, row) => {
