@@ -36,13 +36,29 @@ function BookView()
         .then(res => {setQuestion(res.data)});
     }, [question]);
 
-    const addQuestion = (idx, subject) => {        
+    const addQuestion = (_idx, subject) => {        
         const question = {
-            idx : idx,
-            a_subject : subject
+            qid : _idx,
+            a_subject : subject,
+            idx : idx
         }
         const arr = [...book, question];
         setBook(arr);
+    }
+    const sendChildQuestion = () => {
+        const data = book;
+        const url = `http://localhost:5000/answer`;
+        return axios({
+            url : url,
+            method : 'POST',
+            data : data
+        });
+    }
+
+    const bookViewSubmit = () => {
+        sendChildQuestion()
+        .then(res=>console.log(res));
+
     }
 
     return(            
@@ -117,7 +133,7 @@ function BookView()
                     </table>
                 </div>
                 <div>
-                    <span>등록하기</span>
+                    <Button onClick={()=>{bookViewSubmit()}} className='m-3' variant='secondary' size='lg'>등록하기</Button>
                 </div>
             </div>
         </>    
