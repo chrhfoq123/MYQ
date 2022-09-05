@@ -37,6 +37,7 @@ function BookView()
     }, [question]);
 
     const addQuestion = (_idx, subject) => {        
+        console.log(_idx);
         const question = {
             qid : _idx,
             a_subject : subject,
