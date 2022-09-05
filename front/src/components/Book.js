@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import {Button, Card} from 'react-bootstrap';
+import {Button, Card, Alert} from 'react-bootstrap';
 
 function Book()
 {
@@ -26,8 +26,18 @@ function BookCard()
             url : "http://localhost:5000/book"
         }).then(res => {
             setObj(res.data);
+            setTimeout(()=>{console.log(obj)}, 5000);
         })
     },[]);
+
+    const showAlert = () => {
+        if(window.confirm("문제를 처음부터 푸시겠습니까?")==true){
+            window.location.href=`/booksolve/${obj[0].idx}`;
+        }else{
+            /*그대로유지*/
+            window.location.href='/booksolve';
+        }
+    }
     
     return(
         <>
@@ -39,7 +49,7 @@ function BookCard()
                         <Card.Body>
                             <Card.Title>{obj.subject}</Card.Title>
                             <Card.Text>{obj.memo}</Card.Text>
-                            <Button variant="primary" size='sm' href='/booksolve'>문제 풀기</Button>{' '}
+                            <Button variant="primary" size='sm' onClick={()=>{showAlert()}}>문제 풀기</Button>{' '}
                             <Button variant="primary" size='sm'>문제집 보기</Button>
                         </Card.Body>
                     </Card>
