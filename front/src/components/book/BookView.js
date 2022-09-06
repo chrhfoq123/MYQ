@@ -1,4 +1,4 @@
-import { Form, Button, Table, Modal } from 'react-bootstrap';
+import { Form, Button, Table, Modal, Alert } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
@@ -54,13 +54,32 @@ function BookView()
 
     const bookViewSubmit = () => {
         sendChildQuestion()
-        .then(res=>console.log(res));
+        .then(res=>{
+            
+            if(res.data.msg === "success"){
+                alert("정상적으로 등록되었습니다.");
+            }
+        });
     }
 
     const cancelChildQuestion = (index) => {        
         const arr =[...book];
         arr.splice(index, 1);
         setBook(arr);        
+    }
+
+    const bookDeleteAction = (e) => {
+        e.preventDefault();
+        axios({
+            method : "DELETE",
+            url : `http://localhost:5000/book/${idx}`
+        })
+        .then(res=>{            
+            if(res.data.msg === "success"){
+                alert("정삭적으로 삭제되었습니다.");
+                window.location.href="/book";
+            }
+        });
     }
 
     return(            
@@ -134,8 +153,9 @@ function BookView()
                         </tbody>
                     </table>
                 </div>
-                <div>
+                <div>                    
                     <Button onClick={()=>{bookViewSubmit()}} className='m-3' variant='secondary' size='lg'>등록하기</Button>
+                    <Alert variant='danger'><a href="" onClick={(e)=>{bookDeleteAction(e)}}>문제집삭제</a></Alert>                        
                 </div>
             </div>
         </>    

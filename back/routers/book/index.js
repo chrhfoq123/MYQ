@@ -59,6 +59,30 @@ router.post("/", async (req, res)=>{
         conn.end();
     });
 });
+
+// 데이터 삭제 API
+// DELETE http://localhost:5000/:idx
+router.delete("/:idx", async (req, res) => {
+    const idx = req.params.idx;
+    if(!idx || idx === undefined)
+    {
+        res.send({msg:"idx null"});
+        return;
+    }
+    let query = `
+        DELETE book, book_child
+        FROM book
+        JOIN book_child ON book.idx = book_child.parent
+        WHERE book.idx = ${idx}
+    `;
+    const conn = await require("../../database")();
+    conn.query(query, (err, row) => {
+        if(err) console.log(err);        
+        row.msg = `success`;
+        res.send(row);
+        conn.end();
+    });    
+});
 module.exports = router;
 
 // 문제집 (부모) 을 insert 할때 사용자가 선택한 문제(자식)의 KEY값을 저장 (1. JOIN용 테이블 생성하여 KEY값 저장, 2. 같은 테이블에 column 을 추가해서 "," 로 구분하여 KEY값 저장)
