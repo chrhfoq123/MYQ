@@ -84,6 +84,18 @@ router.delete("/:idx", async (req, res) => {
         conn.end();
     });    
 });
+
+router.patch("/:idx", async (req,res) => {
+    console.log(req.body);
+    let query = `UPDATE book SET subject="${req.body.subject}", memo="${req.body.memo}" WHERE idx=${req.params.idx}`;
+    const conn = await require("../../database")();
+    conn.query(query, (err, row) => {
+        if(err) console.log(err);        
+        row.msg = `success`;
+        res.send(row);
+        conn.end();
+    });        
+});
 module.exports = router;
 
 // 문제집 (부모) 을 insert 할때 사용자가 선택한 문제(자식)의 KEY값을 저장 (1. JOIN용 테이블 생성하여 KEY값 저장, 2. 같은 테이블에 column 을 추가해서 "," 로 구분하여 KEY값 저장)
