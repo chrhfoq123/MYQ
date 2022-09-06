@@ -26,7 +26,7 @@ function App(props) {
             <Route path='Book/:idx' element={<BookView/>}/>
             <Route path='QuestionList' element={<QuestionList/>}/>
             <Route path='developer' element={<Developer/>}/>
-            <Route path='BookSolve' element={<BookSolve/>}/>
+            <Route path='BookSolve/:qid' element={<BookSolve/>}/>
           </Routes>
         </div>
       </BrowserRouter>

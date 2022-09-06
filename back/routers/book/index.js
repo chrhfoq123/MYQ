@@ -9,7 +9,6 @@ router.get("/", async (req, res)=>{
     });
 });
 
-
 router.get("/:idx", async (req, res)=>{
     //let query = `SELECT * FROM book WHERE idx = ${req.params.idx}`;    
     //let query = `SELECT * FROM book LEFT JOIN book_child ON book.idx = book_child.parent WHERE book.idx = ${req.params.idx}`;
