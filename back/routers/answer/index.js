@@ -31,8 +31,7 @@ router.patch("/:idx", async (req,res)=>{
 });
 
 // 문제 등록
-router.post("/", async (req,res)=>{
-    console.log(req.body);
+router.post("/", async (req,res)=>{    
     const idx = req.body[0].idx;
     if(idx === undefined || idx === null) 
     {

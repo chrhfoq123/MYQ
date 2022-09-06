@@ -61,7 +61,8 @@ router.post("/", async (req, res)=>{
 });
 
 // 데이터 삭제 API
-// DELETE http://localhost:5000/:idx
+// DELETE http://localhost:5000/book/:idx
+// 220906 PTK 문제지 삭제시 추가되어있는 문제가 없을 경우 제대로 쿼리문 동작안함
 router.delete("/:idx", async (req, res) => {
     const idx = req.params.idx;
     if(!idx || idx === undefined)

@@ -2,13 +2,14 @@ import { Form, Button, Table, Modal, Alert } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
 import axios from 'axios';
-function BookView()
-{
 
-    /**                       
-     * 5. 문제집 수정 구현
-     * 6. 문제집 삭제 구현
-     */
+/*
+    PTK 남은거
+    • 문제집 수정
+    • 문제삭제 이슈    
+ */
+function BookView()
+{    
 
     const { idx } = useParams();
     const [ book, setBook ] = useState();
@@ -33,7 +34,14 @@ function BookView()
     }, [question]);
 
     const addQuestion = (_idx, subject) => {        
-        console.log(_idx);
+        if(book[0].qid == null){            
+            
+            const arr = [...book];
+            arr[0].qid = _idx;
+            arr[0].a_subject = subject;
+            setBook(arr);
+            return;
+        }
         const question = {
             qid : _idx,
             a_subject : subject,
@@ -67,7 +75,7 @@ function BookView()
         arr.splice(index, 1);
         setBook(arr);        
     }
-
+    
     const bookDeleteAction = (e) => {
         e.preventDefault();
         axios({
@@ -84,7 +92,7 @@ function BookView()
 
     return(            
         <>        
-        <button onClick={()=>{console.log(book);}}>12312</button>
+        {/* <button onClick={()=>{console.log(book);}}>12312</button> */}
             <Modal show={show} onHide={handleClose} size='lg'>
                 <Modal.Header closeButton>
                 <Modal.Title>• 문제 추가</Modal.Title>
@@ -146,9 +154,9 @@ function BookView()
                             </tr>
                         </thead>
                         <tbody>
-                            {book ? book.map((obj, index)=>{
+                            {book ? book[0].qid ? book.map((obj, index)=>{
                                 return  <BookAnswer key={index} index={index} subject={obj.a_subject} cancelChildQuestion={cancelChildQuestion}/>;
-                            }) : <tr><td>로딩</td></tr>}
+                            }) : <tr><td colSpan={4}>No Data</td></tr> : <tr><td colSpan={4}>No Data</td></tr>}
                             
                         </tbody>
                     </table>
