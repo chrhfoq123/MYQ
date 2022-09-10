@@ -47,7 +47,7 @@ router.get("/:idx", async (req, res) => {
     const { idx } = req.params;
     let query = `
     SELECT question.idx as qidx, question.subject as qsubject, make_time, answer.idx as aidx, answer.subject as asubject, answer.isAnswer, question.modify_time
-    FROM question JOIN answer ON question.idx = answer.pkey WHERE question.idx = ${idx}
+    FROM question LEFT JOIN answer ON question.idx = answer.pkey WHERE question.idx = ${idx}
     `;
     const conn = await require("../../database")();
     conn.query(query, (err,row) => {        
