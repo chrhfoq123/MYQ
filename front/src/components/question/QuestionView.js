@@ -2,6 +2,15 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+
+
+/*
+    1. 문제 수정
+    2. 문제 삭제
+    3. 객관식 수정 (모달?)
+    4. 객관식 삭제
+ */
+
 function QuestionView() {
 
     const { idx } = useParams();
@@ -41,34 +50,27 @@ function QuestionView() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>꺄룰랭</td>
-                            <td>
-                                <Button className="m-2">수정</Button>
-                                <Button className="m-2">삭제</Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>꺄룰랭</td>
-                            <td>
-                                <Button className="m-2">수정</Button>
-                                <Button className="m-2">삭제</Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>꺄룰랭</td>
-                            <td>
-                                <Button className="m-2">수정</Button>
-                                <Button className="m-2">삭제</Button>
-                            </td>
-                        </tr>
+                        { question ? question.answers[0].idx !== null ? question.answers.map((obj, index) => {
+                            return <Answer key={index} answer={obj} index={index}/>
+                        }) : <NoData/> : <tr><td>로딩중</td></tr> }
                     </tbody>
                 </table>
             </div>
         </div>
+    );
+}
+
+function Answer(props) {
+    const [answer, setAnswer] = useState(props.answer);
+    return(
+        <tr>
+            <td>{props.index + 1}</td>
+            <td>{answer.subject}</td>
+            <td>
+                <Button className="m-2">수정</Button>
+                <Button className="m-2">삭제</Button>
+            </td>
+        </tr>
     );
 }
 
