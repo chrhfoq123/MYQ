@@ -19,6 +19,7 @@ function Book()
 function BookCard()
 {
     const[obj, setObj] = useState();
+    const[qid, setQid] = useState();
 
     useEffect(() => {
         axios({
@@ -26,13 +27,22 @@ function BookCard()
             url : "http://localhost:5000/book"
         }).then(res => {
             setObj(res.data);
-            setTimeout(()=>{console.log(obj)}, 5000);
+        })
+
+        axios({
+            method : "GET",
+            url : "http://localhost:5000/question"
+        }).then(res => {
+            setQid(res.data);
+
         })
     },[]);
 
-    const showAlert = () => {
+    console.log(obj);
+    const showAlert = (idx) => {
         if(window.confirm("문제를 처음부터 푸시겠습니까?")==true){
-            window.location.href=`/booksolve/${obj[0].idx}`;
+            /* idx의 문제집에 있는 문제 qid를 받아와야함 17대신 */
+            window.location.href=`/booksolve/${idx}?question=${17}`;
         }else{
             /*그대로유지*/
             window.location.href='/booksolve';
@@ -49,7 +59,7 @@ function BookCard()
                         <Card.Body>
                             <Card.Title>{obj.subject}</Card.Title>
                             <Card.Text>{obj.memo}</Card.Text>
-                            <Button variant="primary" size='sm' onClick={()=>{showAlert()}}>문제 풀기</Button>{' '}
+                            <Button variant="primary" size='sm' onClick={()=>{showAlert(obj.idx)}}>문제 풀기</Button>{' '}
                             <Button variant="primary" size='sm'>문제집 보기</Button>
                         </Card.Body>
                     </Card>
