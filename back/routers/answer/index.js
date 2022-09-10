@@ -31,8 +31,7 @@ router.patch("/:idx", async (req,res)=>{
 });
 
 // 문제 등록
-router.post("/", async (req,res)=>{
-    console.log(req.body);
+router.post("/", async (req,res)=>{    
     const idx = req.body[0].idx;
     if(idx === undefined || idx === null) 
     {
@@ -56,7 +55,8 @@ router.post("/", async (req,res)=>{
         }
         conn.query(sub_query, (_err, _row) => {
             if(_err) console.log(_err);
-            res.send(_row);
+            _row.msg = `success`;
+            res.send(_row);            
             conn.end();
         });
     });    
@@ -69,6 +69,7 @@ router.delete("/:idx", async (req, res) => {
     const conn = await require("../../database")();
     conn.query(query, (err, row) => {
         if(err) console.log(err);        
+        row.msg = `success`;
         res.send(row);
         conn.end();
     });    
