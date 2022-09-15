@@ -38,11 +38,9 @@ function AnswerCheck(props)
 {
     const[answer, setAnswer] = useState(props.answer);
 
-    const submitAnswer=()=>{
-        /*제출 누르면 답 보내는거*/
+    const compareAnswer = () =>{
+        
     }
-
-    console.log(answer);
 
     return(
         <div className='answer-main'>
@@ -50,7 +48,7 @@ function AnswerCheck(props)
                 return <AnswerChoice answers={obj.subject} index={index+1}/>
             })}
             <div className='answer-submit'>
-                <Button variant='secondary' size='lg' onClick={()=>{submitAnswer()}}>제출</Button>
+                <Button variant='secondary' size='lg' onClick={()=>{compareAnswer()}}>제출</Button>
             </div>
         </div>
     )
