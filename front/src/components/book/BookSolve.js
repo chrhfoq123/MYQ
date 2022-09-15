@@ -36,26 +36,36 @@ function BookSolve()
 
 function AnswerCheck(props)
 {
-    const[isAnswer, setIsAnswer] = useState(0);
     const[answer, setAnswer] = useState(props.answer);
 
     const submitAnswer=()=>{
         /*제출 누르면 답 보내는거*/
     }
+
     console.log(answer);
 
     return(
         <div className='answer-main'>
-            <div className='answer-check'>
-            <Button variant={isAnswer?'secondary':'outline-secondary'} onClick={()=> {setIsAnswer(isAnswer?0:1)}}>1</Button>{' '}
-            {/*하나하나 따로 나오게 수정해야됨*/}
-            <span>{answer.map((obj, index) => {
-                return obj.subject
-            })}</span>
-            </div>
+            {answer.map((obj, index) => {
+                return <AnswerChoice answers={obj.subject} index={index+1}/>
+            })}
             <div className='answer-submit'>
                 <Button variant='secondary' size='lg' onClick={()=>{submitAnswer()}}>제출</Button>
             </div>
+        </div>
+    )
+}
+
+function AnswerChoice(props)
+{
+    const [isAnswer, setIsAnswer] = useState(0);
+    const [answer, setAnswer] = useState(props.answers);
+    const [index, setIndex] = useState(props.index);
+
+    return(
+        <div className='answer-check'>
+            <Button variant={isAnswer?'secondary':'outline-secondary'} onClick={()=> {setIsAnswer(isAnswer?0:1)}}>{index}</Button>{' '}
+            <span>{answer}</span>
         </div>
     )
 }
