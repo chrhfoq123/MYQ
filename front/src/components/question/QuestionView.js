@@ -36,6 +36,15 @@ function QuestionView() {
             data : {subject : question.subject}
         });
     }
+
+    const deleteQuestion = (e) => {
+        e.preventDefault();
+        axios({
+            method : "DELETE",
+            url : `http://localhost:5000/question/${idx}`
+        })
+        .then(res => {console.log(res)});
+    }
     return(
         <div className="question-view">
             {/* <button onClick={()=>{console.log(question)}}>TEST</button> */}
@@ -55,7 +64,7 @@ function QuestionView() {
             </div>       
             <div className="question-option mt-3">
                 <Alert variant="primary"><a href="" onClick={(e)=>{modifyQuestion(e)}}>수정하기</a></Alert>            
-                <Alert variant="danger"><a href="">삭제하기</a></Alert>
+                <Alert variant="danger"><a href="" onClick={(e)=>{deleteQuestion(e)}}>삭제하기</a></Alert>
             </div>
             <div className="question-answers">
                 <table className="question-answers-table">
