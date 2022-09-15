@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 
@@ -22,18 +22,40 @@ function QuestionView() {
         })
         .then(res => setQuestion(res.data));
     }, []);
+
+    const modifyQuestion = (e) => {
+        e.preventDefault();
+        modifyQuestionAction()
+        .then(res => console.log(res));
+    }
+
+    const modifyQuestionAction = () => {
+        return axios({
+            method : "PATCH",
+            url : `http://localhost:5000/question/${idx}`,
+            data : {subject : question.subject}
+        });
+    }
     return(
         <div className="question-view">
             {/* <button onClick={()=>{console.log(question)}}>TEST</button> */}
             <div className="question-info">
                 <div className="info-item">
-                    <div>• 문제 이름 </div>
-                    <div>{question ? question.subject : ""}</div>
+                    <div>• 문제 이름 </div>                    
+                    <input value={question ? question.subject : ""} onChange={(e)=>{
+                        const clone = Object.assign({}, question);
+                        clone.subject = e.target.value;
+                        setQuestion(clone);
+                    }} />
                 </div>
                 <div className="info-item">
                     <div>• 등록 일자 </div>
                     <div>{question ? question.make_time : ""}</div>
                 </div>
+            </div>       
+            <div className="question-option mt-3">
+                <Alert variant="primary"><a href="" onClick={(e)=>{modifyQuestion(e)}}>수정하기</a></Alert>            
+                <Alert variant="danger"><a href="">삭제하기</a></Alert>
             </div>
             <div className="question-answers">
                 <table className="question-answers-table">
