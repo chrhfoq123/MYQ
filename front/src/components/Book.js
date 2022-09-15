@@ -58,9 +58,9 @@ function BookCard()
                         <Card.Img variant="top" src="img/asdfasdf.png" />
                         <Card.Body>
                             <Card.Title>{obj.subject}</Card.Title>
-                            <Card.Text>{obj.memo}</Card.Text>
+                            <Card.Text>{obj.memo}</Card.Text>     
                             <Button variant="primary" size='sm' onClick={()=>{showAlert(obj.idx)}}>문제 풀기</Button>{' '}
-                            <Button variant="primary" size='sm'>문제집 보기</Button>
+                            <Button variant="primary" size='sm' href={`/book/${obj.idx}`}>문제집 보기</Button>
                         </Card.Body>
                     </Card>
                 </div>

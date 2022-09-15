@@ -41,13 +41,14 @@
 .book-view .book-info {display: flex; justify-content: space-between; flex-wrap: wrap;}
 .book-view .info-item {display: flex; flex-direction: column; margin: 1rem; width: 45%;}
 .book-view .item-text {font-size: 1.8rem;}
+.book-view .info-item-input > input {width: 80%;}
 .book-view .child-question {border :none; display: flex; flex-direction: column; align-items: center;}
 .book-view .child-question > strong {font-size: 1.4rem; margin-bottom: 1rem;}
 .book-view .child-question table {width: 95%; border : 2px solid #000000; text-align: center;}
 .book-view .child-question table > thead {text-align: center; border-bottom: 2px solid #000000; font-weight: bold;}
 .book-view .child-question table tr {padding: 1rem}
 .book-view .child-question table tr:not(tr:last-child) {border-bottom: 1px solid #000000;}
-
+.book-view .modify-btn {font-size: 14px; color: #59a6ff; float: right; padding-right: 2rem; font-weight: bold; cursor: pointer;}
 .book-view .child-question-addbtn {align-self: flex-end; padding-right: 2rem; padding-bottom: 0.6rem; color: #0b5ed7; cursor: pointer;}
 .question-add-modal-head > tr > th {text-align: center;}
 .question-add-modal > tr > td {vertical-align: middle; text-align: center;}
