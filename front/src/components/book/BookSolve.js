@@ -7,8 +7,7 @@ import queryString from 'query-string';
 function BookSolve()
 {
     const[obj, setObj] = useState();
-    const[subject, setSubject] = useState();
-    const[answer, setAnswer] = useState([]);
+    const[userAnswer, setUserAnswer] = useState([]);
 
     useEffect(() => {
         let params = queryString.parse(window.location.search);
@@ -17,9 +16,22 @@ function BookSolve()
             url : `http://localhost:5000/question/${params.question}`
         }).then(res => {
             setObj(res.data);
+
+            let tmp = [];
+            for(let i=0; i<res.data.answers.length; i++){
+                tmp[i] = 0;
+            }
+            setUserAnswer(tmp);
         })
     }, []);
 
+    /* QuestionSolve 73줄 문제채점 해야됨*/
+    const setAnswer = (index, value) => {
+        let tmp = [...userAnswer];
+        tmp[index] = value;
+        setUserAnswers(tmp);
+    }
+    
     return(
         <div className='booksolve-main'>
             <div className='booksolve-area'>
@@ -27,7 +39,7 @@ function BookSolve()
                     <span>{obj? obj.subject : "로딩중.."}</span>
                 </div>
                 <div className='booksolve-answer'>
-                     {obj? <AnswerCheck answer={obj.answers}/> : "로딩중"}
+                     {obj? <AnswerCheck answer={obj.answers} setAnswer={setAnswer}/> : "로딩중"}
                 </div>
             </div>
         </div>
@@ -39,7 +51,7 @@ function AnswerCheck(props)
     const[answer, setAnswer] = useState(props.answer);
 
     const compareAnswer = () =>{
-        
+        /* 옛날꺼 QuestionSolve 74~123 참고 */
     }
 
     return(
