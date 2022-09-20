@@ -5,10 +5,9 @@ import { useParams } from "react-router-dom";
 
 
 /*
-    1. 문제 수정
-    2. 문제 삭제
-    3. 객관식 수정 (모달?)
-    4. 객관식 삭제
+    1. 객관식 수정 (모달?)
+    2. 객관식 삭제
+    3. 객관식 추가
  */
 
 function QuestionView() {
@@ -93,13 +92,21 @@ function QuestionView() {
 
 function Answer(props) {
     const [answer, setAnswer] = useState(props.answer);
+    const idx = props.answer.idx;
+    const removeAnswer = () => {
+        axios({
+            method : "DELETE",
+            url : "http://localhost:5000/answer/" + idx
+        })
+        .then(res => console.log(res));
+    }
     return(
         <tr>
             <td>{props.index + 1}</td>
             <td>{answer.subject}</td>
             <td>
                 <Button className="m-2">수정</Button>
-                <Button className="m-2">삭제</Button>
+                <Button className="m-2" onClick={() => {removeAnswer()}}>삭제</Button>
             </td>
         </tr>
     );
