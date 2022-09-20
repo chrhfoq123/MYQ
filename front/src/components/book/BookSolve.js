@@ -7,7 +7,6 @@ import queryString from 'query-string';
 function BookSolve()
 {
     const[obj, setObj] = useState();
-    const[userAnswer, setUserAnswer] = useState([]);
 
     useEffect(() => {
         let params = queryString.parse(window.location.search);
@@ -16,21 +15,8 @@ function BookSolve()
             url : `http://localhost:5000/question/${params.question}`
         }).then(res => {
             setObj(res.data);
-
-            let tmp = [];
-            for(let i=0; i<res.data.answers.length; i++){
-                tmp[i] = 0;
-            }
-            setUserAnswer(tmp);
         })
     }, []);
-
-    /* QuestionSolve 73줄 문제채점 해야됨*/
-    const setAnswer = (index, value) => {
-        let tmp = [...userAnswer];
-        tmp[index] = value;
-        setUserAnswers(tmp);
-    }
     
     return(
         <div className='booksolve-main'>
@@ -39,7 +25,7 @@ function BookSolve()
                     <span>{obj? obj.subject : "로딩중.."}</span>
                 </div>
                 <div className='booksolve-answer'>
-                     {obj? <AnswerCheck answer={obj.answers} setAnswer={setAnswer}/> : "로딩중"}
+                     {obj? <AnswerCheck answer={obj.answers}/> : "로딩중"}
                 </div>
             </div>
         </div>
@@ -49,19 +35,21 @@ function BookSolve()
 function AnswerCheck(props)
 {
     const[answer, setAnswer] = useState(props.answer);
+    const[userAnswer, setUserAnswer] = useState([]);
 
-    const compareAnswer = () =>{
-        /* 옛날꺼 QuestionSolve 74~123 참고 */
-    }
+    useEffect(() => {
+        let tmp = [];
+        for(let i=0; i<answer.length; i++){
+            tmp[i]=0;
+        }
+        setUserAnswer(tmp);
+    }, [])
 
     return(
         <div className='answer-main'>
             {answer.map((obj, index) => {
-                return <AnswerChoice answers={obj.subject} index={index+1}/>
+                return <AnswerChoice answers={obj.subject} index={index+1} userAnswer={userAnswer}/>
             })}
-            <div className='answer-submit'>
-                <Button variant='secondary' size='lg' onClick={()=>{compareAnswer()}}>제출</Button>
-            </div>
         </div>
     )
 }
@@ -71,11 +59,37 @@ function AnswerChoice(props)
     const [isAnswer, setIsAnswer] = useState(0);
     const [answer, setAnswer] = useState(props.answers);
     const [index, setIndex] = useState(props.index);
+    const [userAnswer, setUserAnswer] = useState(props.userAnswer);
 
     return(
         <div className='answer-check'>
             <Button variant={isAnswer?'secondary':'outline-secondary'} onClick={()=> {setIsAnswer(isAnswer?0:1)}}>{index}</Button>{' '}
             <span>{answer}</span>
+            <SubmitBtn userAnswer={userAnswer} isAnswer={isAnswer}/>
+        </div>
+    )
+}
+
+function SubmitBtn(props)
+{
+    const [userAnswer, setUserAnswer] = useState(props.userAnswer);
+    const [isAnswer, setIsAnswer] = useState(props.isAnswer);
+
+    const grading = () => {
+        let answer = [];
+        for(let i=0; i<userAnswer.length; i++){
+            answer[i] = isAnswer;
+        }
+        let cursor = 0;
+        while(cursor < userAnswer.length){
+            if(answer[cursor] !== userAnswer[cursor]){
+                return false;
+            }
+        }
+    }
+    return(
+        <div className='answer-submit'>
+            <Button variant='secondary' size='lg' onClick={()=>{grading(isAnswer)}}>제출</Button>
         </div>
     )
 }
