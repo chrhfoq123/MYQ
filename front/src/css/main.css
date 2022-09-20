@@ -62,3 +62,7 @@
 .question-view .question-answers-table {border : 2px solid #000000; margin-top: 2rem; width: 100%; text-align: center; border-radius: 8px; font-size: 18px;}
 .question-view .question-answers-table thead {border-bottom: 2px solid #000000;}
 .question-view .question-answers-table tr:not(tr:last-child) {border-bottom: 1px solid #000000;}
+.answer-modal-content {display: flex; align-items: center; justify-content: space-between;}
+.answer-modal-content > input {font-size: 22px; width: 80%;}
+.answer-modal-content > span {font-size: 22px; width: 15%; text-align: center; border: 2px solid #0b5ed7; font-weight: bold; color: #0b5ed7;}
+.answer-modal-content > span.on {background-color: #0b5ed7; color: #ffffff;}

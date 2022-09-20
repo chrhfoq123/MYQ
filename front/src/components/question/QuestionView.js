@@ -5,18 +5,25 @@ import { useParams } from "react-router-dom";
 
 
 /*
-    1. 객관식 수정 (모달?)
-    2. 객관식 삭제
-    3. 객관식 추가
+    1. 객관식 수정 (모달?)    
+    2. 객관식 추가
  */
 
 function QuestionView() {
 
     const { idx } = useParams();
     const [question, setQuestion] = useState();
+
     const [show, setShow] = useState(false); // 모달
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [selectId, setSelectId] = useState(-1);
+    const handleClose = () => {
+        setSelectId(-1);
+        setShow(false);
+    }
+    const handleShow = (idx) => {
+        setSelectId(idx);
+        setShow(true);
+    };
     useEffect(()=>{
         axios({
             method : "GET",
@@ -49,7 +56,7 @@ function QuestionView() {
     }
     return(
         <div className="question-view">
-            <AnswerModal handleClose={handleClose} show={show}/>
+            {selectId !== -1 ? <AnswerModal idx={selectId} handleClose={handleClose} show={show}/> : ""}            
             {/* <button onClick={()=>{console.log(question)}}>TEST</button> */}
             <div className="question-info">
                 <div className="info-item">
@@ -118,18 +125,41 @@ function Answer(props) {
     );
 }
 
-function AnswerModal(props) {
+function AnswerModal(props) {        
+    const [answer, setAnswer] = useState();
+    useEffect(()=>{
+        axios({
+            method : "GET",
+            url : `http://localhost:5000/answer/${props.idx}`
+        })
+        .then(res => {
+            setAnswer(res.data[0]);
+        });
+    }, []);       
     return(
         <Modal show={props.show}>
-            <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Header>
+                <Modal.Title>객관식 수정</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Body>
+                <div className="answer-modal-content">
+                    <input onChange={(e)=>{
+                        const clone = Object.assign({}, answer);
+                        clone.subject = e.target.value;
+                        setAnswer(clone);
+                    }} value={answer ? answer.subject : ""}/>
+                    <span className={answer ? answer.isAnswer == 1 ? "on" : "" : ""} onClick={()=>{
+                        const clone = Object.assign({}, answer);
+                        clone.isAnswer = clone.isAnswer == 0 ? 1 : 0;
+                        setAnswer(clone);
+                    }}>정답</span>
+                </div>
+            </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={()=>{props.handleClose()}}>
                 Close
             </Button>
-            <Button variant="primary">
+            <Button variant="primary" onClick={()=>{console.log(answer)}}>
                 Save Changes
             </Button>
             </Modal.Footer>
