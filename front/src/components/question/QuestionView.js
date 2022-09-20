@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { Alert, Button } from "react-bootstrap";
+import { Alert, Button, Modal } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 
@@ -14,6 +14,9 @@ function QuestionView() {
 
     const { idx } = useParams();
     const [question, setQuestion] = useState();
+    const [show, setShow] = useState(false); // 모달
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
     useEffect(()=>{
         axios({
             method : "GET",
@@ -46,6 +49,7 @@ function QuestionView() {
     }
     return(
         <div className="question-view">
+            <AnswerModal handleClose={handleClose} show={show}/>
             {/* <button onClick={()=>{console.log(question)}}>TEST</button> */}
             <div className="question-info">
                 <div className="info-item">
@@ -81,11 +85,11 @@ function QuestionView() {
                     </thead>
                     <tbody>
                         { question ? question.answers[0].idx !== null ? question.answers.map((obj, index) => {
-                            return <Answer key={index} answer={obj} index={index}/>
+                            return <Answer key={index} answer={obj} index={index} handleShow={handleShow}/>
                         }) : <NoData/> : <tr><td>로딩중</td></tr> }
                     </tbody>
                 </table>
-            </div>
+            </div>            
         </div>
     );
 }
@@ -105,10 +109,31 @@ function Answer(props) {
             <td>{props.index + 1}</td>
             <td>{answer.subject}</td>
             <td>
-                <Button className="m-2">수정</Button>
-                <Button className="m-2" onClick={() => {removeAnswer()}}>삭제</Button>
+                <Button className="m-2" onClick={()=>{
+                    props.handleShow(idx);
+                }}>수정</Button>
+                <Button className="m-2" onClick={()=>{removeAnswer()}}>삭제</Button>
             </td>
         </tr>
+    );
+}
+
+function AnswerModal(props) {
+    return(
+        <Modal show={props.show}>
+            <Modal.Header closeButton>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+            <Modal.Footer>
+            <Button variant="secondary" onClick={()=>{props.handleClose()}}>
+                Close
+            </Button>
+            <Button variant="primary">
+                Save Changes
+            </Button>
+            </Modal.Footer>
+        </Modal>
     );
 }
 
