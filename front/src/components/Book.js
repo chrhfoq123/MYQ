@@ -19,8 +19,7 @@ function Book()
 function BookCard()
 {
     const[obj, setObj] = useState();
-    const[qid, setQid] = useState();
-
+    const[qid, setQid] = useState();    
     useEffect(() => {
         axios({
             method : "GET",
@@ -39,14 +38,8 @@ function BookCard()
     },[]);
 
     console.log(obj);
-    const showAlert = (idx) => {
-        if(window.confirm("문제를 처음부터 푸시겠습니까?")==true){
-            /* idx의 문제집에 있는 문제 qid를 받아와야함 17대신 */
-            window.location.href=`/booksolve/${idx}?question=${17}`;
-        }else{
-            /*그대로유지*/
-            window.location.href='/booksolve';
-        }
+    const showAlert = (idx) => {                    
+        window.location.href=`/booksolve/${idx}`;        
     }
     
     return(

@@ -75,8 +75,20 @@ router.delete("/:idx", async (req, res) => {
     });    
 });
 
-router.get("/:pkey", async (req, res) => {
+router.get("/:idx", async (req, res) => {
     let query = `SELECT * FROM answer WHERE idx=${req.params.pkey}`;
+    console.log(query);
+    const conn = await require("../../database")();
+    conn.query(query, (err,row) => {
+        if(err) console.log(err);
+        res.send(row);
+        conn.end();
+    });
+
+});
+
+router.get("/getanswer/:pkey", async (req, res) => {
+    let query = `SELECT * FROM answer WHERE pkey=${req.params.pkey}`;    
     const conn = await require("../../database")();
     conn.query(query, (err,row) => {
         if(err) console.log(err);

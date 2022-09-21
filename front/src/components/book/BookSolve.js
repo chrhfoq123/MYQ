@@ -1,97 +1,54 @@
-import {Button} from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import queryString from 'query-string';
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 
-function BookSolve()
-{
-    const[obj, setObj] = useState();
+function BookSolve() {
 
-    useEffect(() => {
-        let params = queryString.parse(window.location.search);
+    const { bookId } = useParams();
+    const [book, setBook] = useState();
+    const [cursor, setCursor] = useState(0);
+
+    useEffect(()=>{
         axios({
             method : "GET",
-            url : `http://localhost:5000/question/${params.question}`
-        }).then(res => {
-            setObj(res.data);
+            url : `http://localhost:5000/book/${bookId}`
         })
-    }, []);
-    
+        .then(res=>{
+            setBook(res.data);
+        });
+    },[]);
+
     return(
-        <div className='booksolve-main'>
-            <div className='booksolve-area'>
-                <div className='booksolve-question'>
-                    <span>{obj? obj.subject : "로딩중.."}</span>
-                </div>
-                <div className='booksolve-answer'>
-                     {obj? <AnswerCheck answer={obj.answers}/> : "로딩중"}
-                </div>
-            </div>
+        <div>
+            <div>문제풀기이다</div>            
+            <Button onClick={()=>{setCursor(cursor-1)}}>이전</Button>
+            <Button onClick={()=>{setCursor(cursor+1)}}>다음</Button>
+            <Button>제출</Button>
+            <button onClick={()=>{console.log(book)}}>TEST</button>
+            <hr/>
+            { book ? book[cursor] ? <Question cursor={cursor} question={book[cursor]} /> : "커서에 맞는 question객체 가 없을때" : "book객체 자체가 없을때 useEffect전" }
         </div>
     );
 }
 
-function AnswerCheck(props)
-{
-    const[answer, setAnswer] = useState(props.answer);
-    const[userAnswer, setUserAnswer] = useState([]);
-
-    useEffect(() => {
-        let tmp = [];
-        for(let i=0; i<answer.length; i++){
-            tmp[i]=0;
-        }
-        setUserAnswer(tmp);
-    }, [])
-
+function Question(props) {
+    const [question, setQuestion] = useState(props.question);
+    const [answers, setAnswers] = useState();
+    useEffect(()=>{
+        axios({
+            method : "GET",
+            url : `http://localhost:5000/answer/getanswer/${props.question.qid}`
+        })
+        .then(res=>{
+            setAnswers(res.data);
+        });
+    });
     return(
-        <div className='answer-main'>
-            {answer.map((obj, index) => {
-                return <AnswerChoice answers={obj.subject} index={index+1} userAnswer={userAnswer}/>
-            })}
+        <div>
+            <h1>{props.cursor + 1}. {question.a_subject}</h1>            
         </div>
-    )
-}
-
-function AnswerChoice(props)
-{
-    const [isAnswer, setIsAnswer] = useState(0);
-    const [answer, setAnswer] = useState(props.answers);
-    const [index, setIndex] = useState(props.index);
-    const [userAnswer, setUserAnswer] = useState(props.userAnswer);
-
-    return(
-        <div className='answer-check'>
-            <Button variant={isAnswer?'secondary':'outline-secondary'} onClick={()=> {setIsAnswer(isAnswer?0:1)}}>{index}</Button>{' '}
-            <span>{answer}</span>
-            <SubmitBtn userAnswer={userAnswer} isAnswer={isAnswer}/>
-        </div>
-    )
-}
-
-function SubmitBtn(props)
-{
-    const [userAnswer, setUserAnswer] = useState(props.userAnswer);
-    const [isAnswer, setIsAnswer] = useState(props.isAnswer);
-
-    const grading = () => {
-        let answer = [];
-        for(let i=0; i<userAnswer.length; i++){
-            answer[i] = isAnswer;
-        }
-        let cursor = 0;
-        while(cursor < userAnswer.length){
-            if(answer[cursor] !== userAnswer[cursor]){
-                return false;
-            }
-        }
-    }
-    return(
-        <div className='answer-submit'>
-            <Button variant='secondary' size='lg' onClick={()=>{grading(isAnswer)}}>제출</Button>
-        </div>
-    )
+    );
 }
 
 export default BookSolve;
