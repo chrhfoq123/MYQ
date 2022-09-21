@@ -32,9 +32,22 @@ function BookSolve() {
     );
 }
 
-function Question(props) {    
+function Question(props) {
+    const [question, setQuestion] = useState(props.question);
+    const [answers, setAnswers] = useState();
+    useEffect(()=>{
+        axios({
+            method : "GET",
+            url : `http://localhost:5000/answer/getanswer/${props.question.qid}`
+        })
+        .then(res=>{
+            setAnswers(res.data);
+        });
+    });
     return(
-        <div>{props.cursor} 문제</div>
+        <div>
+            <h1>{props.cursor + 1}. {question.a_subject}</h1>            
+        </div>
     );
 }
 
