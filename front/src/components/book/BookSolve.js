@@ -32,9 +32,10 @@ function BookSolve() {
     );
 }
 
-function Question(props) {
+function Question(props) {    
     const [question, setQuestion] = useState(props.question);
-    const [answers, setAnswers] = useState();
+    const [answers, setAnswers] = useState();    
+    const [userChoice, setUserChoice] = useState([]);
 
     useEffect(()=>{
         axios({
@@ -42,19 +43,39 @@ function Question(props) {
             url : `http://localhost:5000/answer/getanswer/${props.question.qid}`
         })
         .then(res=>{
+            console.log(res.data);
+            let temp = new Array();
+            let i=0;
+            while(i < res.data.length) {
+                temp.push(0);
+                i++;
+            }
+            setUserChoice(temp);
             setAnswers(res.data);
         });
-    });
+    }, []);
+
+    const answerChoice = (index) => {
+        let temp = [...userChoice];
+        temp[index] = temp[index] == 0 ? 1 : 0;
+        setUserChoice(temp);
+    }
 
     return(
         <div>
             <h1>{props.cursor + 1}. {question.a_subject}</h1>
             <div>
                 {answers ? answers.map((obj, index) => {
-                    return <span>{obj.subject}</span>
+                    return <Answer key={index} index={index} choice={userChoice[index]} subject={obj.subject} answerChoice={answerChoice}/>
                 }) : "로딩중..."}
             </div>
         </div>
+    );
+}
+
+function Answer(props) {
+    return(
+        <div className={props.choice == 1 ? "answer-choice on" : "answer-choice" } onClick={()=>{props.answerChoice(props.index)}}>{ props.subject }</div>
     );
 }
 
