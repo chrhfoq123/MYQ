@@ -105,7 +105,9 @@ function BookView()
             url : `http://localhost:5000/book/${idx}`,
             data : data
         })
-        .then(res => console.log(res));
+        .then(res => {
+            if(res.data.msg === "success") alert("수정이 완료되었습니다.");
+        });
     }
 
     
