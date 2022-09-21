@@ -35,6 +35,7 @@ function BookSolve() {
 function Question(props) {
     const [question, setQuestion] = useState(props.question);
     const [answers, setAnswers] = useState();
+
     useEffect(()=>{
         axios({
             method : "GET",
@@ -44,9 +45,15 @@ function Question(props) {
             setAnswers(res.data);
         });
     });
+
     return(
         <div>
-            <h1>{props.cursor + 1}. {question.a_subject}</h1>            
+            <h1>{props.cursor + 1}. {question.a_subject}</h1>
+            <div>
+                {answers ? answers.map((obj, index) => {
+                    return <span>{obj.subject}</span>
+                }) : "로딩중..."}
+            </div>
         </div>
     );
 }
