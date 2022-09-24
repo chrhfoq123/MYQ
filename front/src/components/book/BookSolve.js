@@ -19,9 +19,10 @@ function BookSolve() {
         });
     },[]);
 
+    //문제가 안바뀜
     return(
         <div>
-            <div>문제풀기이다</div>            
+            <div>문제풀기이다</div>
             <Button onClick={()=>{setCursor(cursor-1)}}>이전</Button>
             <Button onClick={()=>{setCursor(cursor+1)}}>다음</Button>
             <Button>제출</Button>
