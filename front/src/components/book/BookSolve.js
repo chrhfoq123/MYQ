@@ -33,17 +33,19 @@ function BookSolve() {
 }
 
 function Question(props) {    
-    const [question, setQuestion] = useState(props.question);
+    const [question, setQuestion] = useState();    
     const [answers, setAnswers] = useState();    
     const [userChoice, setUserChoice] = useState([]);
+    useEffect(()=>{
+        setQuestion(props.question);
+    });
 
     useEffect(()=>{
         axios({
             method : "GET",
             url : `http://localhost:5000/answer/getanswer/${props.question.qid}`
         })
-        .then(res=>{
-            console.log(res.data);
+        .then(res=>{            
             let temp = new Array();
             let i=0;
             while(i < res.data.length) {
@@ -53,7 +55,7 @@ function Question(props) {
             setUserChoice(temp);
             setAnswers(res.data);
         });
-    }, []);
+    }, [question]);
 
     const answerChoice = (index) => {
         let temp = [...userChoice];
@@ -63,7 +65,7 @@ function Question(props) {
 
     return(
         <div>
-            <h1>{props.cursor + 1}. {question.a_subject}</h1>
+            <h1>{props.cursor + 1}. {question ? question.a_subject : ""}</h1>
             <div>
                 {answers ? answers.map((obj, index) => {
                     return <Answer key={index} index={index} choice={userChoice[index]} subject={obj.subject} answerChoice={answerChoice}/>
@@ -73,7 +75,7 @@ function Question(props) {
     );
 }
 
-function Answer(props) {
+function Answer(props) {    
     return(
         <div className={props.choice == 1 ? "answer-choice on" : "answer-choice" } onClick={()=>{props.answerChoice(props.index)}}>{ props.subject }</div>
     );
