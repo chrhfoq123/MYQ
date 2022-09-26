@@ -36,7 +36,8 @@ function Question(props) {
     const [question, setQuestion] = useState();    
     const [answers, setAnswers] = useState();    
     const [userChoice, setUserChoice] = useState([]);
-    
+    const [status, setStatus] = useState(2);
+
     useEffect(()=>{
         setQuestion(props.question);
     });
@@ -66,20 +67,20 @@ function Question(props) {
 
     const compare = () => {
         let i=0;
-        let status = "정답";
+        //아직안품=2, 정답=1, 오답=0
         while(i < answers.length){
             if(answers[i].isAnswer !== userChoice[i]){
-                status = "오답";
-                break;
+                setStatus(0);
+                return;
             }
             i++;
         }
-        console.log(status);
+        setStatus(1);
     }
 
     return(
         <div>
-            <h1>{props.cursor + 1}. {question ? question.a_subject : ""} <Button onClick={()=>{compare()}}>제출</Button></h1>
+            <h1>{props.cursor + 1}. {question ? question.a_subject : ""} <Button onClick={()=>{compare()}}>제출</Button> <span>{status == 0 ? "오답" : status == 1 ? "정답" : ""}</span></h1>
             <div>
                 {answers ? answers.map((obj, index) => {
                     return <Answer key={index} index={index} choice={userChoice[index]} subject={obj.subject} answerChoice={answerChoice}/>
