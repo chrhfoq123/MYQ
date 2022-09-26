@@ -62,6 +62,20 @@ router.post("/", async (req,res)=>{
     });    
 });
 
+// 객관식 추가 수정 API
+router.post("/addanswer", async (req, res) => {
+    const { idx } = req.body;
+    let query = `INSERT INTO answer (subject, isAnswer, pkey) VALUES ("${req.body.subject}",${req.body.isAnswer},${req.body.pkey})`;
+    const conn = await require('../../database')();
+    conn.query(query, (err, row) => {
+        if(err) console.log(err);        
+        row.msg = `success`;
+        res.send(row);
+        conn.end();
+    });
+    
+});
+
 // 문제 삭제 API
 router.delete("/:idx", async (req, res) => {
     const idx = req.params.idx;
