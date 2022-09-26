@@ -19,7 +19,6 @@ function BookSolve() {
         });
     },[]);
 
-    //문제가 안바뀜
     return(
         <div>
             <div>문제풀기이다</div>
@@ -27,7 +26,7 @@ function BookSolve() {
             <Button onClick={()=>{setCursor(cursor+1)}}>다음</Button>
             <button onClick={()=>{console.log(book)}}>TEST</button>
             <hr/>
-            { book ? book[cursor] ? <Question cursor={cursor} question={book[cursor]} /> : "커서에 맞는 question객체 가 없을때" : "book객체 자체가 없을때 useEffect전" }
+            { book ? book[cursor] ? <Question cursor={cursor} question={book[cursor]}/> : "커서에 맞는 question객체 가 없을때" : "book객체 자체가 없을때 useEffect전" }
         </div>
     );
 }
@@ -56,6 +55,7 @@ function Question(props) {
             }
             setUserChoice(temp);
             setAnswers(res.data);
+            setStatus(2);
         });
     }, [question]);
 
@@ -76,11 +76,12 @@ function Question(props) {
             i++;
         }
         setStatus(1);
+        console.log(status);
     }
 
     return(
         <div>
-            <h1>{props.cursor + 1}. {question ? question.a_subject : ""} <Button onClick={()=>{compare()}}>제출</Button> <span>{status == 0 ? "오답" : status == 1 ? "정답" : ""}</span></h1>
+            <h1>{props.cursor + 1}. {question ? question.a_subject : ""} <Button onClick={()=>{compare()}}>제출</Button> <StatusManager status={status}/></h1>
             <div>
                 {answers ? answers.map((obj, index) => {
                     return <Answer key={index} index={index} choice={userChoice[index]} subject={obj.subject} answerChoice={answerChoice}/>
@@ -94,6 +95,18 @@ function Answer(props) {
     return(
         <div className={props.choice == 1 ? "answer-choice on" : "answer-choice" } onClick={()=>{props.answerChoice(props.index)}}>{ props.subject }</div>
     );
+}
+
+function StatusManager(props){
+    const [status, setStatus] = useState(2);
+
+    useEffect(()=>{
+        setStatus(props.status);
+    });
+
+    return(
+        <span>{status == 0 ? "오답" : status == 1 ? "정답" : ""}</span>
+    )
 }
 
 export default BookSolve;
