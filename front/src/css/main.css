@@ -62,10 +62,15 @@
 .question-view .question-info {border: 2px solid #858585; margin-top: 3rem; display: flex; justify-content: space-between; flex-wrap: wrap; padding: 1.2rem; border-radius: 15px;}
 .question-view .question-info .info-item {width: 45%; margin: 1rem; padding: 0.8rem;}
 .question-answers {width: 100%;} 
-.question-view .question-answers-table {border : 2px solid #000000; margin-top: 2rem; width: 100%; text-align: center; border-radius: 8px; font-size: 18px;}
+.question-answers .question-answers-top {display: flex; justify-content: space-between;}
+.question-view .question-answers-table {border : 2px solid #000000; width: 100%; text-align: center; border-radius: 8px; font-size: 18px;}
 .question-view .question-answers-table thead {border-bottom: 2px solid #000000;}
 .question-view .question-answers-table tr:not(tr:last-child) {border-bottom: 1px solid #000000;}
 .answer-modal-content {display: flex; align-items: center; justify-content: space-between;}
 .answer-modal-content > input {font-size: 22px; width: 80%;}
 .answer-modal-content > span {font-size: 22px; width: 15%; text-align: center; border: 2px solid #0b5ed7; font-weight: bold; color: #0b5ed7;}
 .answer-modal-content > span.on {background-color: #0b5ed7; color: #ffffff;}
+
+.question-view .add-answer-form {}
+.question-view .add-answer-form > span { border: 2px solid #0b5ed7; background-color: #ffffff;  color: #0b5ed7; cursor: pointer; padding: 0.2rem;}
+.question-view .add-answer-form > span.on { background-color: #0b5ed7; color: #ffffff; }

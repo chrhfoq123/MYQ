@@ -77,6 +77,9 @@ function QuestionView() {
                 <Alert variant="danger"><a href="" onClick={(e)=>{deleteQuestion(e)}}>삭제하기</a></Alert>
             </div>
             <div className="question-answers">
+                <div className="question-answers-top">
+                    <span>객관식</span>                    
+                </div>
                 <table className="question-answers-table">
                     <colgroup>
                         <col width={'10%'}/>
@@ -96,7 +99,35 @@ function QuestionView() {
                         }) : <NoData/> : <tr><td>로딩중</td></tr> }
                     </tbody>
                 </table>
-            </div>            
+            </div>
+            <AddAnswerForm idx={idx}/>
+        </div>
+    );
+}
+
+function AddAnswerForm(props) {
+    let [state, setState] = useState(0);
+    let [str, setStr] = useState(0);    
+    let { idx } = props;
+    const addAnswerAction = () => {
+        axios({
+            method : "POST",
+            url : `http://localhost:5000/answer/addanswer`,
+            data : {
+                isAnswer : state,
+                pkey : idx,
+                subject : str
+            }
+        })
+        .then(res => {
+            console.log(res);
+        });
+    }
+    return(
+        <div className="add-answer-form">
+            <input value={str} onChange={(e)=>{setStr(e.target.value)}}/>
+            <span className={state == 1 ? "on" : ""} onClick={()=>{setState(state == 1 ? 0 : 1)}}>정답</span>
+            <button onClick={()=>{addAnswerAction()}}>추가</button>
         </div>
     );
 }
