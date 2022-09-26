@@ -136,6 +136,18 @@ function AnswerModal(props) {
             setAnswer(res.data[0]);
         });
     }, []);       
+    const modifySubmit = (idx) => {
+        console.log(answer);
+        axios({
+            method : "PATCH",
+            url : `http://localhost:5000/answer/${idx}`,
+            data : answer
+        })
+        .then(res=> {
+            console.log(res);
+        });
+
+    }
     return(
         <Modal show={props.show}>
             <Modal.Header>
@@ -157,10 +169,10 @@ function AnswerModal(props) {
             </Modal.Body>
             <Modal.Footer>
             <Button variant="secondary" onClick={()=>{props.handleClose()}}>
-                Close
+                닫기
             </Button>
-            <Button variant="primary" onClick={()=>{console.log(answer)}}>
-                Save Changes
+            <Button variant="primary" onClick={()=>{modifySubmit(props.idx)}}>
+                수정하기
             </Button>
             </Modal.Footer>
         </Modal>
