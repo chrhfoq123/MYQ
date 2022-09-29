@@ -37,7 +37,6 @@ function BookCard()
         })
     },[]);
 
-    console.log(obj);
     const showAlert = (idx) => {                    
         window.location.href=`/booksolve/${idx}`;        
     }
