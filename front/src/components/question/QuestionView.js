@@ -36,6 +36,8 @@ function QuestionView() {
         e.preventDefault();
         modifyQuestionAction()
         .then(res => console.log(res));
+        alert("수정되었습니다.");
+        window.location.reload();
     }
 
     const modifyQuestionAction = () => {
@@ -53,6 +55,9 @@ function QuestionView() {
             url : `http://localhost:5000/question/${idx}`
         })
         .then(res => {console.log(res)});
+
+        alert("삭제되었습니다.");
+        window.location.href = "/questionList";
     }
     return(
         <div className="question-view">
@@ -122,6 +127,9 @@ function AddAnswerForm(props) {
         .then(res => {
             console.log(res);
         });
+
+        alert("추가되었습니다.");
+        window.location.reload();
     }
     return(
         <div className="add-answer-form">
@@ -141,6 +149,9 @@ function Answer(props) {
             url : "http://localhost:5000/answer/" + idx
         })
         .then(res => console.log(res));
+
+        alert("삭제되었습니다.");
+        window.location.reload();
     }
     return(
         <tr>
@@ -177,6 +188,9 @@ function AnswerModal(props) {
         .then(res=> {
             console.log(res);
         });
+
+        alert("수정되었습니다.");
+        window.location.reload();
 
     }
     return(
