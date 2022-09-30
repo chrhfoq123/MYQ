@@ -9,6 +9,8 @@ function BookSolve() {
     const [book, setBook] = useState();
     const [cursor, setCursor] = useState(0);
 
+    console.log(book);
+
     useEffect(()=>{
         axios({
             method : "GET",
@@ -20,13 +22,19 @@ function BookSolve() {
     },[]);
 
     return(
-        <div>
-            <div>문제풀기이다</div>
-            <Button onClick={()=>{setCursor(cursor-1)}}>이전</Button>
-            <Button onClick={()=>{setCursor(cursor+1)}}>다음</Button>
-            <button onClick={()=>{console.log(book)}}>TEST</button>
+        <div className="booksolve">
+            {/*문제집 Title 큼지막하게*/}
+            <div className="book-title">
+                문제집 Title : {book ? book[0].subject : "로딩"}
+                <Button href="/Book">나가기</Button>
+            </div>
+            {/*이전, 다음버튼 답체크 밑에 중간으로*/}
             <hr/>
             { book ? book[cursor] ? <Question cursor={cursor} question={book[cursor]}/> : "커서에 맞는 question객체 가 없을때" : "book객체 자체가 없을때 useEffect전" }
+            <div className="move-btn">
+                <Button className="asdf"onClick={()=>{setCursor(cursor-1)}}>이전</Button>
+                <Button onClick={()=>{setCursor(cursor+1)}}>다음</Button>
+            </div>
         </div>
     );
 }
@@ -92,8 +100,12 @@ function Question(props) {
 }
 
 function Answer(props) {
+
     return(
-        <div className={props.choice == 1 ? "answer-choice on" : "answer-choice" } onClick={()=>{props.answerChoice(props.index)}}>{ props.subject }</div>
+        <div className="answer-item">
+            <div className={props.choice == 1 ? "answer-choice on" : "answer-choice" } onClick={()=>{props.answerChoice(props.index)}}>{ props.index+1 }</div>
+            <span>{props.subject}</span>
+        </div>
     );
 }
 
