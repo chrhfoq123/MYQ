@@ -29,10 +29,14 @@
 
 /* BookSolve */
 .booksolve {margin: 0 auto; width: 40%;}
-.book-title{ font-size: x-large; }
-.answer-choice { border: 2px solid #0b5ed7; color: #0b5ed7; padding: 1%; margin-top: 0.5%;}
+.book-title{ font-size: x-large; margin: 3%;}
+.outBtn.btn.btn-primary { margin-left: 40%;}
+.answer-choice { border: 2px solid #0b5ed7; color: #0b5ed7; padding: 1%; margin-top: 0.5%; border-radius: 15%;}
+.answer-subject { margin-left: 2%;}
 .answer-choice.on { background-color: #0b5ed7; color: #ffffff;}
-.answer-item {display: flex; align-items: center;}
+.answer-item {display: flex; align-items: center; margin: 1rem;}
+.move-btn { margin-top: 10%;}
+.preBtn.btn.btn-primary { margin-left: 40%; margin-right: 5%;}
 
 
 
