@@ -28,13 +28,11 @@
 .book-write {width: 40%; margin: 3rem auto;}
 
 /* BookSolve */
-.booksolve-area{width: 60%; height: 50%; border: 2px solid #c4c4c4; border-radius: 10px; margin: 2rem auto; padding: 1%;}
-.booksolve-question{font-size: 20px; border-bottom: 2px solid#c4c4c4; padding-bottom: 1%; margin-bottom: 2%;}
-.answer-check{padding-top: 1%;}
-.answer-submit{margin-left: 70%;}
-
-.answer-choice { border: 2px solid #0b5ed7; color: #0b5ed7;}
+.booksolve {margin: 0 auto; width: 40%;}
+.book-title{ font-size: x-large; }
+.answer-choice { border: 2px solid #0b5ed7; color: #0b5ed7; padding: 1%; margin-top: 0.5%;}
 .answer-choice.on { background-color: #0b5ed7; color: #ffffff;}
+.answer-item {display: flex; align-items: center;}
 
 
 
