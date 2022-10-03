@@ -35,11 +35,8 @@
 .answer-subject { margin-left: 2%;}
 .answer-choice.on { background-color: #0b5ed7; color: #ffffff;}
 .answer-item {display: flex; align-items: center; margin: 1rem;}
-.move-btn { margin-top: 10%;}
-.preBtn.btn.btn-primary { margin-left: 40%; margin-right: 5%;}
-
-
-
+.move-btn { margin-top: 10%; display: flex; justify-content: center;}
+.preBtn { margin-right: 5%;}
 
 /* Book View */
 .book-view {width: 50%; margin: 3rem auto; border : 3px solid #797979; padding: 3rem; border-radius: 15px;}

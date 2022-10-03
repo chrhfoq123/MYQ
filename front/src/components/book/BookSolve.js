@@ -15,6 +15,7 @@ function BookSolve() {
             url : `http://localhost:5000/book/${bookId}`
         })
         .then(res=>{
+            console.log(res);
             setBook(res.data);
         });
     },[]);
@@ -29,7 +30,7 @@ function BookSolve() {
                 <ListGroupItem>{ book ? book[cursor] ? <Question cursor={cursor} question={book[cursor]}/> : "커서에 맞는 question객체 가 없을때" : "book객체 자체가 없을때 useEffect전" }</ListGroupItem>
                 <div className="move-btn">
                     { cursor > 0 ? <Button className="preBtn"onClick={()=>{setCursor(cursor-1)}}>이전</Button> : "" }                    
-                    {book ? book.length-1 > cursor ? <Button className="nextBtn" onClick={()=>{setCursor(cursor+1)}}>다음</Button> : "" : "" }                    
+                    {book ? book.length-1 > cursor ? <Button className="nextBtn" onClick={()=>{setCursor(cursor+1)}}>다음</Button> : "" : "" }
                 </div>
             </ListGroup>
         </div>
