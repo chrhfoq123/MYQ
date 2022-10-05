@@ -50,13 +50,9 @@ function Question()
     }
 
     const postQuestion = async () => {
+        console.log(answers.subject);
         if(title === "" || title === undefined){
             alert("문제를 입력해주세요.");
-            return;
-        }
-
-        if(answers.subject === "" || answers.subject === undefined){
-            alert("답을 추가해주세요.");
             return;
         }
 
