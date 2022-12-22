@@ -1,4 +1,4 @@
 # MYQ(My Question)
 
-Add Question and Solve them  
-Make a workbook of the questions you added
+1. Add Question and Solve them  
+2. Make a workbook of the questions you added
